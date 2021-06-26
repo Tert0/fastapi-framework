@@ -1,5 +1,8 @@
 site_name: Fastapi Framework Documentation
 site_url: https://tert0.github.io/fastapi-framework
+site_description: "A FastAPI Framework"
+site_author: https://github.com/Tert0/
+remote_branch: gh-pages
 
 repo_url: https://github.com/Tert0/fastapi-framework
 repo_name: Tert0/fastapi-framework
@@ -38,3 +41,7 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Tert0
