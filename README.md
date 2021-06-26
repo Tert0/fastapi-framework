@@ -14,7 +14,7 @@ For the Documentation click [here](https://tert0.github.io/fastapi-framework)
 
 # Features
 - [x] Database
-- [ ] Redis
+- [x] Redis
 - [ ] Redis Publish/Subscribe
 - [ ] FastAPI JWT
 - [ ] FastAPI Permission System (for routes)
