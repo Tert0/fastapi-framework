@@ -1,0 +1,34 @@
+name: Deploy Docs
+
+on:
+  - push
+  - pull_request
+
+env:
+  PYTHON_VERSION: 3.9
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.9
+
+      - name: Install Doc dependencies
+        run: pip install mkdocs-material
+
+      - name: Build Docs
+        run: mkdocs build
+
+      - name: Deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/develop' }}
+        run: mkdocs gh-deploy --force
