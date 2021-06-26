@@ -1,0 +1,6 @@
+fastapi
+setuptools
+sqlalchemy
+asyncpg
+aioredis
+python-dotenv
