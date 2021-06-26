@@ -63,7 +63,7 @@ class DB:
             pool_recycle=300, pool_size=20, max_overflow=20,
         )
         self.Base = declarative_base()
-        self._session = sessionmaker(self._engine, expire_on_commit=False)()
+        self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
 
     async def create_tables(self):
         async with self._engine.begin() as conn:
