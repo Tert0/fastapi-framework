@@ -105,12 +105,12 @@ class DB:
 logger = get_logger(__name__)
 
 db: DB = DB(
-    getenv("DB_DRIVER"),
-    getenv("DB_HOST"),
-    getenv("DB_PORT"),
+    getenv("DB_DRIVER", "postgresql+asyncpg"),
+    getenv("DB_HOST", "localhost"),
+    getenv("DB_PORT", "5432"),
     getenv("DB_DATABASE"),
-    getenv("DB_USERNAME"),
-    getenv("DB_PASSWORD")
+    getenv("DB_USERNAME", "postgres"),
+    getenv("DB_PASSWORD", "")
 )
 
 logger.info("Connected to Database")
