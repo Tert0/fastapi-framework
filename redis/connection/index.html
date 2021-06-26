@@ -13,19 +13,21 @@
         <meta name="author" content="https://github.com/Tert0/">
       
       
-      <link rel="icon" href="/fastapi-framework/assets/images/favicon.png">
+        <link rel="canonical" href="https://tert0.github.io/fastapi-framework/redis/connection/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
     
     
       
-        <title>Fastapi Framework Documentation</title>
+        <title>Redis Connection - Fastapi Framework Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/fastapi-framework/assets/stylesheets/main.ca7ac06f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ca7ac06f.min.css">
       
         
-        <link rel="stylesheet" href="/fastapi-framework/assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
       
     
@@ -59,7 +61,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
   
     
-    <script>function __prefix(e){return new URL("/fastapi-framework/",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -68,6 +70,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#redis-connection" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -75,7 +82,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/fastapi-framework/." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../.." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -94,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Redis Connection
             
           </span>
         </div>
@@ -190,7 +197,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/fastapi-framework/." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../.." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -222,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         FastAPI Framework
       </a>
     </li>
@@ -237,7 +244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/environment/" class="md-nav__link">
+      <a href="../../environment/" class="md-nav__link">
         Environment
       </a>
     </li>
@@ -273,7 +280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/database/" class="md-nav__link">
+      <a href="../../database/" class="md-nav__link">
         Database
       </a>
     </li>
@@ -285,7 +292,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/database/models/" class="md-nav__link">
+      <a href="../../database/models/" class="md-nav__link">
         Models
       </a>
     </li>
@@ -297,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/database/query/" class="md-nav__link">
+      <a href="../../database/query/" class="md-nav__link">
         Query
       </a>
     </li>
@@ -309,7 +316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/database/insert_delete_modify/" class="md-nav__link">
+      <a href="../../database/insert_delete_modify/" class="md-nav__link">
         Insert, Delete and Modify Data
       </a>
     </li>
@@ -321,7 +328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/database/example/" class="md-nav__link">
+      <a href="../../database/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -340,12 +347,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       <label class="md-nav__link" for="__nav_4">
         Redis
@@ -363,7 +372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/fastapi-framework/redis/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Redis
       </a>
     </li>
@@ -373,11 +382,21 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/fastapi-framework/redis/connection/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Redis Connection
       </a>
+      
     </li>
   
 
@@ -395,11 +414,57 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
+                
+                  <a href="https://github.com/Tert0/fastapi-framework/edit/master/docs/redis/connection.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="redis-connection">Redis Connection</h1>
+<p>You have to init the redis connection with <code>await redis_dependency.init()</code>.</p>
+<p>Now you can use it as FastAPI Dependency.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aioredis</span> <span class="kn">import</span> <span class="n">Redis</span>
+<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">redis_dependency</span>
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="s2">&quot;startup&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_startup</span><span class="p">():</span>
+    <span class="k">await</span> <span class="n">redis_dependency</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/set/</span><span class="si">{key}</span><span class="s2">/</span><span class="si">{value}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">redis</span><span class="p">:</span> <span class="n">Redis</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">redis_dependency</span><span class="p">)):</span>
+    <span class="k">await</span> <span class="n">redis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;Done&quot;</span>
+</code></pre></div>
+                
+              
+              
+                
+
 
               
             </article>
@@ -410,6 +475,26 @@
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Redis" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Redis
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -443,10 +528,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "/fastapi-framework/", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "/fastapi-framework/assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="/fastapi-framework/assets/javascripts/bundle.82b56eb2.min.js"></script>
+      <script src="../../assets/javascripts/bundle.82b56eb2.min.js"></script>
       
     
   </body>
