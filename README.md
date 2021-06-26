@@ -10,7 +10,7 @@ pip install fastapi-framework
 
 # Documentation
 
-For the Documentation click [here](http://localhost:8000/fastapi-framework/)
+For the Documentation click [here](https://tert0.github.io/fastapi-framework)
 
 # Features
 - [x] Database
