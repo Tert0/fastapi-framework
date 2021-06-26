@@ -1,0 +1,40 @@
+site_name: Fastapi Framework Documentation
+site_url: https://tert0.github.io/fastapi-framework
+
+repo_url: https://github.com/Tert0/fastapi-framework
+repo_name: Tert0/fastapi-framework
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+      primary: teal
+      accent: indigo
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
+      primary: teal
+      accent: indigo
+
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - FastAPI Framework: index.md
+  - Environment: environment.md
+  - Database:
+      - database/index.md
+      - database/models.md
+      - database/query.md
+      - database/insert_delete_modify.md
+      - database/example.md
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+
