@@ -36,6 +36,9 @@ nav:
       - database/query.md
       - database/insert_delete_modify.md
       - database/example.md
+  - Redis:
+      - redis/index.md
+      - redis/connection.md
 
 markdown_extensions:
   - pymdownx.highlight
