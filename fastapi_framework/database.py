@@ -59,8 +59,11 @@ class DB:
     def __init__(self, driver: str, host: str, port: str, database: str, username: str, password: str):
         self._engine = create_async_engine(
             URL(drivername=driver, host=host, port=port, database=database, username=username, password=password),
-            echo=True, pool_pre_ping=True,
-            pool_recycle=300, pool_size=20, max_overflow=20,
+            echo=True,
+            pool_pre_ping=True,
+            pool_recycle=300,
+            pool_size=20,
+            max_overflow=20,
         )
         self.Base = declarative_base()
         self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
@@ -110,7 +113,7 @@ db: DB = DB(
     getenv("DB_PORT", "5432"),
     getenv("DB_DATABASE"),
     getenv("DB_USERNAME", "postgres"),
-    getenv("DB_PASSWORD", "")
+    getenv("DB_PASSWORD", ""),
 )
 
 logger.info("Connected to Database")

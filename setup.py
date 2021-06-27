@@ -7,16 +7,14 @@ with open("README.md", "r") as file:
     readme = file.read()
 
 setup(
-    name='fastapi-framework',
+    name="fastapi-framework",
     packages=find_packages(),
-    version='0.1.0',
-    description='A Fastapi Framework',
+    version="0.1.0",
+    description="A Fastapi Framework",
     long_description=readme,
     long_description_content_type="text/markdown",
-    author='Tert0',
-    license='MIT',
+    author="Tert0",
+    license="MIT",
     install_requires=requirements,
-    extra_requires=[
-        "mkdocs-material"
-    ],
+    extra_requires=["mkdocs-material"],
 )

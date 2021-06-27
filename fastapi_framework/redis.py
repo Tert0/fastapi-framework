@@ -15,11 +15,11 @@ class RedisDependency:
         return self.redis
 
     async def init(self):
-        self.redis: Redis = await create_redis_pool(f'redis://{REDIS_HOST}:{REDIS_PORT}')
+        self.redis: Redis = await create_redis_pool(f"redis://{REDIS_HOST}:{REDIS_PORT}")
 
 
 redis_dependency: RedisDependency = RedisDependency()
 
 
 async def get_redis() -> Redis:
-    return await create_redis_pool(f'redis://{REDIS_HOST}:{REDIS_PORT}')
+    return await create_redis_pool(f"redis://{REDIS_HOST}:{REDIS_PORT}")
