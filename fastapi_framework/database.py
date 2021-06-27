@@ -21,7 +21,6 @@ T = TypeVar("T")
 
 def select(entity, *args) -> Select:
     """Shortcut for :meth:`sqlalchemy.future.select`"""
-
     if not args:
         return sa_select(entity)
 
@@ -40,18 +39,22 @@ def select(entity, *args) -> Select:
 
 
 def filter_by(cls, *args, **kwargs) -> Select:
+    """Shortcut for select(*args, **kwargs).filter_by()"""
     return select(cls, *args).filter_by(**kwargs)
 
 
 def exists(*entities, **kwargs) -> Exists:
+    """Shortcut for :meth:`sqlalchemy.sql.expression.exists`"""
     return sa_exists(*entities, **kwargs)
 
 
 def delete(table) -> Delete:
+    """Shortcut for :meth:`sqlalchemy.sql.expression.delete`"""
     return sa_delete(table)
 
 
 class DB:
+    """An async SQLAlchemy ORM wrapper"""
     Base: DeclarativeMeta
     _engine: AsyncEngine
     _session: AsyncSession
@@ -69,39 +72,50 @@ class DB:
         self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
 
     async def create_tables(self):
+        """Creates all Model Tables"""
         async with self._engine.begin() as conn:
             await conn.run_sync(self.Base.metadata.create_all)
 
     async def add(self, obj: T) -> T:
+        """Adds an Row to the Database"""
         self._session.add(obj)
         return obj
 
     async def delete(self, obj: T) -> T:
+        """Deletes a Row from the Database"""
         await self._session.delete(obj)
         return obj
 
     async def exec(self, statement: Executable, *args, **kwargs):
+        """Executes a SQL Statement"""
         return await self._session.execute(statement, *args, **kwargs)
 
     async def stream(self, statement: Executable, *args, **kwargs):
+        """Returns an Stream of Query Results"""
         return (await self._session.stream(statement, *args, **kwargs)).scalars()
 
     async def all(self, statement: Executable, *args, **kwargs) -> list[T]:
+        """Returns all matches for a Query"""
         return [x async for x in await self.stream(statement, *args, **kwargs)]
 
     async def first(self, *args, **kwargs):
+        """Returns first match for a Query"""
         return (await self.exec(*args, **kwargs)).scalar()
 
     async def exists(self, *args, **kwargs):
+        """Checks if there is a match for this Query"""
         return await self.first(exists(*args, **kwargs).select())
 
     async def count(self, *args, **kwargs):
+        """Counts matches for a Query"""
         return await self.first(select(count()).select_from(*args, **kwargs))
 
     async def get(self, cls: Type[T], *args, **kwargs) -> Optional[T]:
+        """Returns first element of the Query from filter_by(cls, *args, **kwargs)"""
         return await self.first(filter_by(cls, *args, **kwargs))
 
     async def commit(self):
+        """Commits/Saves changes to Database"""
         await self._session.commit()
 
 
