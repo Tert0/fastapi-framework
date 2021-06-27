@@ -39,7 +39,7 @@ def select(entity, *args) -> Select:
 
 
 def filter_by(cls, *args, **kwargs) -> Select:
-    """Shortcut for select().filter_by()"""
+    """Shortcut for :meth:`sqlalchemy.future.Select.filter_by`"""
     return select(cls, *args).filter_by(**kwargs)
 
 
