@@ -22,7 +22,7 @@ bearer_scheme = HTTPBearer()
 
 
 async def get_token(token=Depends(bearer_scheme)) -> str:
-    """FastAPI Dependency to get the JWT/Bearer Token"""
+    """Fastapi Dependency to get the JWT/Bearer Token"""
     return str(token.credentials)
 
 
@@ -36,7 +36,7 @@ async def create_jwt_token(data: dict, expires_delta: timedelta) -> str:
 
 
 async def get_data(token: str = Depends(get_token)) -> Dict:
-    """FastAPI Dependency to get JWT Data from the User"""
+    """Fastapi Dependency to get JWT Data from the User"""
     try:
         data = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except jwt.exceptions.InvalidTokenError as e:

@@ -39,7 +39,7 @@ def select(entity, *args) -> Select:
 
 
 def filter_by(cls, *args, **kwargs) -> Select:
-    """Shortcut for select(*args, **kwargs).filter_by()"""
+    """Shortcut for select().filter_by()"""
     return select(cls, *args).filter_by(**kwargs)
 
 
@@ -55,6 +55,7 @@ def delete(table) -> Delete:
 
 class DB:
     """An async SQLAlchemy ORM wrapper"""
+
     Base: DeclarativeMeta
     _engine: AsyncEngine
     _session: AsyncSession

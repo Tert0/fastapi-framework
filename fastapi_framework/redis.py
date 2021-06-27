@@ -10,6 +10,7 @@ REDIS_PORT = getenv("REDIS_PORT")
 
 class RedisDependency:
     """FastAPI Dependency for Redis Connections"""
+
     redis: Redis = None
 
     def __call__(self):
