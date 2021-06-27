@@ -1,4 +1,4 @@
-A FastAPI Framework for things like `Database`, `Redis` and `Logging`
+A FastAPI Framework for things like `Database`, `Redis`, `Logging` and `JWT`
 
 # Install
 
