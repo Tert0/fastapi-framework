@@ -62,7 +62,14 @@ class DB:
 
     def __init__(self, driver: str, host: str, port: str, database: str, username: str, password: str):
         self._engine = create_async_engine(
-            URL(drivername=driver, host=host, port=port, database=database, username=username, password=password),
+            URL(
+                drivername=driver,
+                host=host,
+                port=port,
+                database=database,
+                username=username,
+                password=password,
+            ),
             echo=True,
             pool_pre_ping=True,
             pool_recycle=300,

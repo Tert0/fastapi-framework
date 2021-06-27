@@ -39,6 +39,10 @@ nav:
   - Redis:
       - redis/index.md
       - redis/connection.md
+  - JWT:
+      - jwt/index.md
+      - jwt/jwt_tokens.md
+      - jwt/example.md
 
 markdown_extensions:
   - pymdownx.highlight

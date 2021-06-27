@@ -20,6 +20,14 @@ Name         | Default              | Description
 `REDIS_HOST` | `localhost`          | Host of the Redis Server
 `REDIS_PORT` | `63792`              | Port of the Redis Server
 
+## JWT
+Name                             | Default              | Description
+---------------------------------|----------------------|------------
+`JWT_SECRET_KEY`                 |                      | Secret Key for JWT Authentication
+`JWT_ALGORITHM`                  | `HS256`              | The Algorithm for JWT
+`JWT_ACCESS_TOKEN_EXPIRE_MINUTES`|`30`                  | Expire time for the Access Token
+`JWT_REFRESH_TOKEN_EXPIRE_MINUTES`|`360`                | Expire time for the Refresh Token
+
 ## Other
 Name         | Default              | Description
 -------------|----------------------|------------
