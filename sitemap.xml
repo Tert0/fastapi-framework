@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://tert0.github.io/fastapi-framework/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/environment/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/example/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/insert_delete_modify/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/models/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/query/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/example/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/jwt_tokens/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/redis/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/redis/connection/</loc>
-         <lastmod>2021-06-27</lastmod>
+         <lastmod>2021-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
