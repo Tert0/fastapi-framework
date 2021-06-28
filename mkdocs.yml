@@ -43,6 +43,10 @@ nav:
       - jwt/index.md
       - jwt/jwt_tokens.md
       - jwt/example.md
+  - Rate Limit:
+      - rate_limit/index.md
+      - rate_limit/rate_limit_manager.md
+      - rate_limit/example.md
 
 markdown_extensions:
   - pymdownx.highlight
