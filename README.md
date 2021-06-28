@@ -1,4 +1,5 @@
-A FastAPI Framework for things like `Database`, `Redis`, `Logging` and `JWT`
+A FastAPI Framework for things like `Database`,
+`Redis`, `Logging`, `JWT Authentication` and `Rate Limits` 
 
 # Install
 
@@ -18,7 +19,7 @@ For the Documentation click [here](https://tert0.github.io/fastapi-framework)
 - [ ] Redis Publish/Subscribe
 - [x] FastAPI JWT
 - [ ] FastAPI Permission System (for routes)
-- [ ] Rate Limits
+- [x] Rate Limits
 
 
 # License
