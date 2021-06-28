@@ -38,6 +38,7 @@ class RateLimitManager:
         get_uuid: Union[Callable, Coroutine] = default_get_uuid,
         callback: Union[Callable, Coroutine] = default_callback,
     ):
+        """Initialise Rate Limit Manager"""
         cls.redis = redis
         cls.get_uuid = get_uuid
         cls.callback = callback
