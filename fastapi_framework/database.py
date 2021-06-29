@@ -1,6 +1,6 @@
 from asyncio import get_event_loop
 from os import getenv
-from typing import TypeVar, Optional, Type
+from typing import TypeVar, Optional, Type, Union
 
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
@@ -13,6 +13,7 @@ from sqlalchemy.sql.functions import count
 from sqlalchemy.sql.selectable import Select, Exists
 
 from .logger import get_logger
+from .modules import disabled_modules
 
 load_dotenv()
 
@@ -127,19 +128,21 @@ class DB:
         await self._session.commit()
 
 
-logger = get_logger(__name__)
+db: Union[DB, None] = None
+if "database" not in disabled_modules:
+    logger = get_logger(__name__)
 
-db: DB = DB(
-    getenv("DB_DRIVER", "postgresql+asyncpg"),
-    getenv("DB_HOST", "localhost"),
-    getenv("DB_PORT", "5432"),
-    getenv("DB_DATABASE"),
-    getenv("DB_USERNAME", "postgres"),
-    getenv("DB_PASSWORD", ""),
-)
+    db: DB = DB(
+        getenv("DB_DRIVER", "postgresql+asyncpg"),
+        getenv("DB_HOST", "localhost"),
+        getenv("DB_PORT", "5432"),
+        getenv("DB_DATABASE"),
+        getenv("DB_USERNAME", "postgres"),
+        getenv("DB_PASSWORD", ""),
+    )
 
-logger.info("Connected to Database")
+    logger.info("Connected to Database")
 
-loop = get_event_loop()
-loop.create_task(db.create_tables())
-logger.info("Created Tables")
+    loop = get_event_loop()
+    loop.create_task(db.create_tables())
+    logger.info("Created Tables")

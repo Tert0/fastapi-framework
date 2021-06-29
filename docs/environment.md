@@ -28,7 +28,20 @@ Name                             | Default              | Description
 `JWT_ACCESS_TOKEN_EXPIRE_MINUTES`|`30`                  | Expire time for the Access Token
 `JWT_REFRESH_TOKEN_EXPIRE_MINUTES`|`360`                | Expire time for the Refresh Token
 
+## Modules
+Name              | Default              | Description
+------------------|----------------------|------------
+`DISABLED_MODULES`| ` `                  | Name of Modules too disable
+The names should seperated by `,`,`, ` or `;`.
+All Module names are:
+
+- `database`
+- `redis`
+- `jwt_auth`
+- `logger`
+- `rate_limit`
+
 ## Other
-Name         | Default              | Description
--------------|----------------------|------------
-`LOG_LEVEL` | `INFO`                | Log Level e.g. `DEBUG`, `INFO`, `WARNING` or `ERROR`
+Name              | Default              | Description
+------------------|----------------------|------------
+`LOG_LEVEL`       | `INFO`               | Log Level e.g. `DEBUG`, `INFO`, `WARNING` or `ERROR`

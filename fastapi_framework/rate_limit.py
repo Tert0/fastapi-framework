@@ -5,6 +5,7 @@ from fastapi import Request, HTTPException, Response
 from fastapi.security import HTTPBearer
 
 from fastapi_framework import get_data
+from fastapi_framework.modules import disabled_modules
 
 
 async def default_callback(headers: Dict):
@@ -39,6 +40,8 @@ class RateLimitManager:
         callback: Union[Callable, Coroutine] = default_callback,
     ):
         """Initialise Rate Limit Manager"""
+        if "rate_limit" in disabled_modules:
+            raise Exception("Module Rate Limit is disabled")
         cls.redis = redis
         cls.get_uuid = get_uuid
         cls.callback = callback
@@ -63,6 +66,8 @@ class RateLimiter:
         get_uuid: Union[Callable, Coroutine, None] = None,
         callback: Union[Callable, Coroutine, None] = None,
     ):
+        if "rate_limit" in disabled_modules:
+            raise Exception("Module Rate Limit is disabled")
         self.milliseconds = milliseconds + (seconds + (minutes * 60) + (hours * 60 * 60) + (days * 60 * 60 * 24)) * 1000
         self.count = count
         self.get_uuid = get_uuid

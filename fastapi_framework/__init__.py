@@ -1,3 +1,5 @@
+from .modules import check_dependencies, disabled_modules
+check_dependencies()
 from .database import db
 from .redis import get_redis, RedisDependency, redis_dependency
 from .logger import get_logger
