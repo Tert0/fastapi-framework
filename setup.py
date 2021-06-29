@@ -9,7 +9,7 @@ with open("README.md", "r") as file:
 setup(
     name="fastapi-framework",
     packages=find_packages(),
-    version="0.9.8",
+    version="1.0.0",
     description="A Fastapi Framework",
     long_description=readme,
     long_description_content_type="text/markdown",
