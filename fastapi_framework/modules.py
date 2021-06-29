@@ -1,9 +1,9 @@
 from os import getenv
+from typing import List
 
 from dotenv import load_dotenv
 
 load_dotenv()
-from typing import List
 
 dependencies = {
     "redis": [],
