@@ -1,4 +1,5 @@
 from os import getenv
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,7 +18,8 @@ disabled_modules: List[str] = list(
 
 
 def check_dependencies():
-    for module in dependencies.keys():  # type: str
+    """Checks if Dependencies exists"""
+    for module in dependencies:  # type: str
         if module in disabled_modules:
             continue
         module_dependencies = dependencies[module]
