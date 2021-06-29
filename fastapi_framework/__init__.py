@@ -1,5 +1,5 @@
 from .modules import check_dependencies, disabled_modules
-check_dependencies()
+check_dependencies()  # FLK-E402
 from .database import db
 from .jwt_auth import (
     create_jwt_token,
