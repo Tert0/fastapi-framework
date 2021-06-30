@@ -1,3 +1,4 @@
+from datetime import timedelta
 from typing import Union, Callable, Dict, Coroutine
 
 from aioredis import Redis
@@ -47,28 +48,37 @@ class RateLimitManager:
         cls.callback = callback
 
 
+class RateLimitTime:
+    __milliseconds: int
+
+    def __init__(self, milliseconds: int = 0, seconds: int = 0, minutes: int = 0, hours: int = 0, days: int = 0):
+        self.__milliseconds = (
+            milliseconds + (seconds + (minutes * 60) + (hours * 60 * 60) + (days * 60 * 60 * 24)) * 1000
+        )
+
+    @property
+    def milliseconds(self):
+        return self.__milliseconds
+
+
 class RateLimiter:
     """Raid Limit Dependency"""
 
     count: int
-    milliseconds: int
+    time: RateLimitTime
     get_uuid: Union[Callable, Coroutine]
     callback: Union[Callable, Coroutine]
 
     def __init__(
         self,
         count,
-        milliseconds: int = 0,
-        seconds: int = 0,
-        minutes: int = 0,
-        hours: int = 0,
-        days: int = 0,
+        time: RateLimitTime,
         get_uuid: Union[Callable, Coroutine, None] = None,
         callback: Union[Callable, Coroutine, None] = None,
     ):
         if "rate_limit" in disabled_modules:
             raise Exception("Module Rate Limit is disabled")
-        self.milliseconds = milliseconds + (seconds + (minutes * 60) + (hours * 60 * 60) + (days * 60 * 60 * 24)) * 1000
+        self.time = time
         self.count = count
         self.get_uuid = get_uuid
         self.callback = callback
@@ -94,7 +104,7 @@ class RateLimiter:
 
         count = await RateLimitManager.redis.incr(redis_key)
         if count == 1:
-            await RateLimitManager.redis.pexpire(redis_key, self.milliseconds)
+            await RateLimitManager.redis.pexpire(redis_key, self.time.milliseconds)
         if count >= self.count:
             pttl: int = await RateLimitManager.redis.pttl(redis_key)
             await RateLimitManager.redis.delete(redis_key)
