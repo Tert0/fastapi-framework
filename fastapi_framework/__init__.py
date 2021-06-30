@@ -1,4 +1,5 @@
 from .modules import check_dependencies, disabled_modules
+
 check_dependencies()  # noqa: FLK-E402
 from .database import db
 from .jwt_auth import (
