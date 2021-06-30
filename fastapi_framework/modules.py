@@ -25,6 +25,8 @@ def check_dependencies():
             continue
         for module_dependency in dependencies[module]:
             needed_dependencies.add((module, module_dependency))
+    needed_dependencies = set(
+        needed_dependency for needed_dependency in needed_dependencies if needed_dependency in disabled_modules
+    )
     for needed_dependency in needed_dependencies:
-        if needed_dependency[1] in disabled_modules:
-            raise Exception(f"Module '{needed_dependency[0]}' needs the disabled Module '{needed_dependency[1]}'")
+        raise Exception(f"Module '{needed_dependency[0]}' needs the disabled Module '{needed_dependency[1]}'")
