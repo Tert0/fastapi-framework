@@ -52,9 +52,7 @@ class RateLimitTime:
     __milliseconds: int
 
     def __init__(self, seconds: int = 0, minutes: int = 0, hours: int = 0, days: int = 0):
-        self.__milliseconds = (
-            (seconds + (minutes * 60) + (hours * 60 * 60) + (days * 60 * 60 * 24)) * 1000
-        )
+        self.__milliseconds = (seconds + (minutes * 60) + (hours * 60 * 60) + (days * 60 * 60 * 24)) * 1000
 
     @property
     def milliseconds(self):
