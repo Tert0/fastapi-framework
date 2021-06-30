@@ -1,5 +1,5 @@
 from os import getenv
-from typing import List
+from typing import List, Set
 
 from dotenv import load_dotenv
 
@@ -19,10 +19,12 @@ disabled_modules: List[str] = list(
 
 def check_dependencies():
     """Checks if Dependencies exists"""
+    needed_dependencies: Set[tuple[str, str]] = set()
     for module in dependencies:  # type: str
         if module in disabled_modules:
             continue
-        module_dependencies = dependencies[module]
-        for module_dependency in module_dependencies:
-            if module_dependency in disabled_modules:
-                raise Exception(f"Module '{module}' needs the disabled Module '{module_dependency}'")
+        for module_dependency in dependencies[module]:
+            needed_dependencies.add((module, module_dependency))
+    for needed_dependency in needed_dependencies:
+        if needed_dependency[1] in disabled_modules:
+            raise Exception(f"Module '{needed_dependency[0]}' needs the disabled Module '{needed_dependency[1]}'")
