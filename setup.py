@@ -16,11 +16,7 @@ setup(
     author="Tert0",
     license="MIT",
     install_requires=requirements,
-    extra_requires=[
-        "mkdocs-material",
-        "black",
-        "coverage"
-    ],
+    extra_requires=["mkdocs-material", "black", "coverage"],
     url="https://github.com/Tert0/fastapi-framework",
     python_requires=">=3.6",
 )
