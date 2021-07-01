@@ -5,7 +5,7 @@ on:
   - pull_request
 
 jobs:
-  codestyle:
+  unit_tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,9 @@ jobs:
           pip install --upgrade pip
           pip install coverage
       - name: Run unit tests with coverage
-        run: ./coverage.sh
+        run: |
+          chmod +x coverage.sh
+          ./coverage.sh
 
       - name: Send coverage report to codeclimate
         env:
