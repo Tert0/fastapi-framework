@@ -7,7 +7,7 @@ from fastapi_framework.modules import disabled_modules
 load_dotenv()
 
 REDIS_HOST = getenv("REDIS_HOST", "localhost")
-REDIS_PORT = getenv("REDIS_PORT")
+REDIS_PORT = getenv("REDIS_PORT", "6379")
 
 
 class RedisDependency:
