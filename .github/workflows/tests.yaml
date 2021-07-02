@@ -29,6 +29,8 @@ jobs:
           redis-version: 5
 
       - name: Run unit tests with coverage
+        env:
+          SECRET_KEY: "SECRET_TEST_KEY"
         run: |
           chmod +x coverage.sh
           ./coverage.sh
