@@ -1,3 +1,4 @@
+import asyncio
 from asyncio import get_event_loop
 from os import getenv
 from typing import TypeVar, Optional, Type, Union
@@ -144,5 +145,5 @@ if "database" not in disabled_modules:
     logger.info("Connected to Database")
 
     loop = get_event_loop()
-    loop.create_task(db.create_tables())
-    logger.info("Created Tables")
+    logger.info("Create Tables")
+    asyncio.ensure_future(db.create_tables())
