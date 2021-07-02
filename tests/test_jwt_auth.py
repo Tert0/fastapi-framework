@@ -1,7 +1,14 @@
 from datetime import timedelta
-from typing import Dict
+from typing import Dict, Union
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch, AsyncMock
+
+import jwt
+from aioredis import Redis
+from fastapi import FastAPI, Depends, HTTPException
+from httpx import AsyncClient, Response
+
+from fastapi_framework import redis_dependency
 from fastapi_framework.jwt_auth import (
     get_token,
     create_jwt_token,
@@ -13,10 +20,64 @@ from fastapi_framework.jwt_auth import (
     check_refresh_token,
     generate_tokens,
 )
-import jwt
+
+app = FastAPI()
+
+users = [
+    {"user_id": 1, "username": "test", "password": "123"},
+    {"user_id": 2, "username": "admin", "password": "AdminPassword"},
+]
+
+
+@app.get("/token")
+async def token_route(username: str, password: str, redis: Redis = Depends(redis_dependency)):
+    user: Union[Dict[str, str], None] = None
+    for user_item in users:
+        if user_item["username"] == username:
+            user = user_item.copy()
+            break
+
+    if (user is None) or password != user["password"]:
+        raise HTTPException(401, detail="Username or Password is wrong")
+    return await generate_tokens(
+        {"user": {"id": user["user_id"], "username": user["username"]}}, int(user["user_id"]), redis
+    )
+
+
+@app.get("/refresh")
+async def refresh_route(refresh_token: str, redis: Redis = Depends(redis_dependency)):
+    data: Dict = {}
+    if not await check_refresh_token(refresh_token, redis):
+        raise HTTPException(401, "Refresh Token Invalid")
+    try:
+        data = await get_data(refresh_token)
+    except HTTPException as e:
+        if e.detail == "Token is expired":
+            await invalidate_refresh_token(refresh_token, redis)
+            raise e
+    user_id = int(data["user_id"])
+    username: str = ""
+    for user in users:
+        if user["user_id"] == user_id:
+            username = user["username"]
+    await invalidate_refresh_token(refresh_token, redis)
+    return await generate_tokens({"user": {"id": user_id, "username": username}}, int(user_id), redis)
+
+
+@app.get("/logout", dependencies=[Depends(get_token)])
+async def logout_route(refresh_token: str, redis: Redis = Depends(redis_dependency)):
+    await invalidate_refresh_token(refresh_token, redis)
+
+
+@app.get("/secret", dependencies=[Depends(get_data)])
+async def secured_route():
+    return f"Hello!"
 
 
 class TestJWTAuth(IsolatedAsyncioTestCase):
+    async def asyncSetUp(self):
+        await redis_dependency.init()
+
     async def test_get_token(self):
         bearer_scheme = MagicMock()
         bearer_scheme.credentials = "TEST_JWT_TOKEN"
@@ -106,3 +167,17 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         decoded_refresh_token = jwt.decode(refresh_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
         self.assertTrue("user_id" in decoded_refresh_token)
         self.assertEqual(decoded_refresh_token["user_id"], user_id)
+
+    async def test_login(self):
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("access_token" in response.json())
+        self.assertTrue("refresh_token" in response.json())
+        self.assertTrue("token_type" in response.json())
+        self.assertEqual(response.json()["token_type"], "bearer")
+
+    async def test_login_invalid_credentials(self):
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/token", params={"username": "not_exists", "password": "wrong"})
+        self.assertEqual(response.status_code, 401)
