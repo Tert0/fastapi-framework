@@ -106,4 +106,3 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         decoded_refresh_token = jwt.decode(refresh_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
         self.assertTrue("user_id" in decoded_refresh_token)
         self.assertEqual(decoded_refresh_token["user_id"], user_id)
-
