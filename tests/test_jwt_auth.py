@@ -71,7 +71,7 @@ async def logout_route(refresh_token: str, redis: Redis = Depends(redis_dependen
 
 @app.get("/secret", dependencies=[Depends(get_data)])
 async def secured_route():
-    return f"Hello!"
+    return "Hello!"
 
 
 class TestJWTAuth(IsolatedAsyncioTestCase):
@@ -178,7 +178,22 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         self.assertTrue("token_type" in response.json())
         self.assertEqual(response.json()["token_type"], "bearer")
 
+    @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_login_invalid_credentials(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "not_exists", "password": "wrong"})
         self.assertEqual(response.status_code, 401)
+
+    @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
+    async def test_secret_route(self):
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("access_token" in response.json())
+        self.assertTrue("token_type" in response.json())
+        self.assertEqual(response.json()["token_type"], "bearer")
+        access_token = response.json()["access_token"]
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/secret", headers={"Authorization": f"Bearer {access_token}"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode("utf-8"), '"Hello!"')
