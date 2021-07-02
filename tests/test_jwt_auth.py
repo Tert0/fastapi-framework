@@ -168,6 +168,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         self.assertTrue("user_id" in decoded_refresh_token)
         self.assertEqual(decoded_refresh_token["user_id"], user_id)
 
+    @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_login(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
