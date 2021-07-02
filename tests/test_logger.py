@@ -27,4 +27,3 @@ class LoggerTest(TestCase):
         self.assertIsInstance(logging_handler, logging.StreamHandler)
         self.assertEqual(logging_handler.stream, sys.stdout)
         self.assertEqual(logging_handler.formatter, logging_formatter)
-
