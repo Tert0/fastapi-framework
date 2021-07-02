@@ -146,4 +146,4 @@ if "database" not in disabled_modules:
 
     loop = get_event_loop()
     logger.info("Create Tables")
-    asyncio.ensure_future(db.create_tables())
+    loop.create_task(db.create_tables())
