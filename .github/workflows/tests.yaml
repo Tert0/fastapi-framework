@@ -21,7 +21,13 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install coverage
+          pip install coverage httpx
+
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.2.0
+        with:
+          redis-version: 5
+
       - name: Run unit tests with coverage
         run: |
           chmod +x coverage.sh
