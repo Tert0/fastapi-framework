@@ -1,4 +1,3 @@
-from datetime import timedelta
 from typing import Union, Callable, Dict, Coroutine
 
 from aioredis import Redis
