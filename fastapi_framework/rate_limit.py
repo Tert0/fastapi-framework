@@ -83,9 +83,9 @@ class RateLimiter:
     async def __call__(self, request: Request, response: Response):
         if not RateLimitManager.redis:
             raise Exception("You have to initialise the RateLimitManager at the Startup")
-        self.get_uuid = self.get_uuid or RateLimitManager.get_uuid
-        self.callback = self.callback or RateLimitManager.callback
-        uuid: Union[str, Coroutine] = self.get_uuid(request)
+        get_uuid: Callable = self.get_uuid or RateLimitManager.get_uuid
+        callback: Callable = self.callback or RateLimitManager.callback
+        uuid: Union[str, Coroutine] = get_uuid(request)
         if isinstance(uuid, Coroutine):
             uuid: str = await uuid
         redis_key: str = f"rate_limit:{request.url.path}:{uuid}"
@@ -93,8 +93,8 @@ class RateLimiter:
         if await RateLimitManager.redis.exists(redis_key_lock):
             headers = await self.get_headers(redis_key)
             result = None
-            if isinstance(self.callback, Callable):
-                result = self.callback(headers)
+            if isinstance(callback, Callable):
+                result = callback(headers)
             if isinstance(result, Coroutine):
                 await result
             return
