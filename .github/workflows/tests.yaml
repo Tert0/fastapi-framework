@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
+      - name: Create Coverage File
+        run: touch coverage.xml
+
       - name: Run unit tests with coverage
         run: docker-compose up --build
 

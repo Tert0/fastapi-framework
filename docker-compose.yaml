@@ -9,4 +9,4 @@ services:
     depends_on:
       - redis
     volumes:
-    - "coverage.xml":"coverage.xml"
+      - ./coverage.xml:/fastapi_framework/coverage.xml
