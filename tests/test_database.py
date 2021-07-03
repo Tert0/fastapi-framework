@@ -1,9 +1,52 @@
+from typing import Union, List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch, AsyncMock
+
+from fastapi import HTTPException, FastAPI
+from sqlalchemy import Column, String, Integer
+
 from fastapi_framework.database import select, filter_by, exists, delete, db
+
+from httpx import AsyncClient, Response
+
+app = FastAPI()
+
+
+class User(db.Base):
+    __tablename__ = "users"
+    id: Union[Column, int] = Column(Integer, primary_key=True)
+    name: Union[Column, str] = Column(String(255))
+
+    @staticmethod
+    async def create(name: str) -> "User":
+        row = User(name=name)
+        await db.add(row)
+        return row
+
+
+@app.get("/users")
+async def get_users():
+    return await db.all(select(User))
+
+
+@app.get("/users/{name}")
+async def get_users(name: str):
+    return await db.all(select(User).filter_by(name=name))
+
+
+@app.post("/users/{name}")
+async def add_user(name: str) -> User:
+    if await db.exists(select(User).filter_by(name=name)):
+        raise HTTPException(409, "Username already used")
+    user = await User.create(name)
+    await db.commit()
+    return user
 
 
 class TestDatabase(IsolatedAsyncioTestCase):
+    async def asyncSetUp(self):
+        await db.create_tables()
+
     @patch("fastapi_framework.database.sa_select")
     async def test_select(self, sa_select: MagicMock):
         model = MagicMock()
@@ -60,3 +103,8 @@ class TestDatabase(IsolatedAsyncioTestCase):
         row = MagicMock()
         await db.add(row)
         async_session_patch.add.assert_called_with(row)
+
+    async def test_get_users(self):
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/users")
+        self.assertIsInstance(response.json(), List)
