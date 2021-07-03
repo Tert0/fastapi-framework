@@ -97,6 +97,15 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         get_data_patch.assert_called_once_with("test_bearer_token")
         self.assertEqual(uuid, "5")
 
+    @patch("fastapi_framework.rate_limit.get_data")
+    @patch("fastapi_framework.rate_limit.HTTPBearer")
+    async def test_get_uuid_user_id_no_token(self, http_bearer_patch: AsyncMock, get_data_patch: AsyncMock):
+        http_bearer_patch.return_value = AsyncMock()
+        http_bearer_patch.return_value.return_value = None
+        request = MagicMock()
+        with self.assertRaises(Exception):
+            await get_uuid_user_id(request)
+
     async def test_limited_route(self):
         self.testing_uuid = "test_limited_route"
         async with AsyncClient(app=app, base_url="https://test") as ac:
