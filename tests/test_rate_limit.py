@@ -1,7 +1,10 @@
+from collections import Coroutine
+from typing import List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from fastapi import HTTPException
+from fastapi import HTTPException, FastAPI, Depends, Request
+from httpx import AsyncClient, Response
 
 from fastapi_framework.rate_limit import (
     RateLimitManager,
@@ -11,10 +14,26 @@ from fastapi_framework.rate_limit import (
     default_callback,
     get_uuid_user_id,
 )
-from fastapi_framework import rate_limit
+from fastapi_framework import rate_limit, redis_dependency
+
+app = FastAPI()
+
+
+@app.get("/limited", dependencies=[Depends(RateLimiter(2, RateLimitTime(seconds=5)))])
+async def limited_route():
+    return f"Got it"
 
 
 class TestRateLimit(IsolatedAsyncioTestCase):
+    testing_uuid: str = "start_uuid"
+
+    async def get_testing_uuid(self, request: Request) -> str:
+        return self.testing_uuid
+
+    async def asyncSetUp(self):
+        await redis_dependency.init()
+        await RateLimitManager.init(await redis_dependency(), get_uuid=self.get_testing_uuid)
+
     @patch.object(rate_limit, "disabled_modules", [])
     async def test_rate_limit_manager_init(self):
         redis = AsyncMock()
@@ -77,3 +96,46 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         uuid = await get_uuid_user_id(request)
         get_data_patch.assert_called_once_with("test_bearer_token")
         self.assertEqual(uuid, "5")
+
+    async def test_limited_route(self):
+        self.testing_uuid = "test_limited_route"
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            response: Response = await ac.get("/limited")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode("utf-8"), '"Got it"')
+
+    async def test_limited_route_without_init(self):
+        self.testing_uuid = "test_limited_route_without_init"
+        RateLimitManager.redis = None
+        with self.assertRaises(Exception):
+            async with AsyncClient(app=app, base_url="https://test") as ac:
+                await ac.get("/limited")
+        RateLimitManager.redis = await redis_dependency()
+
+    async def test_spam_limited_route_with_async_callback(self):
+        self.testing_uuid = "test_spam_limited_route_with_async_callback"
+        async_callback = AsyncMock()
+        RateLimitManager.callback = async_callback
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            for i in range(4):
+                response: Response = await ac.get("/limited")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.content.decode("utf-8"), '"Got it"')
+            if i >= 2:
+                async_callback.assert_called()
+        RateLimitManager.callback = default_callback
+
+    async def test_spam_limited_route(self):
+        self.testing_uuid = "test_spam_limited_route"
+        responses: List[Response] = []
+        async with AsyncClient(app=app, base_url="https://test") as ac:
+            for _ in range(4):
+                responses.append(await ac.get("/limited"))
+        for i, response in enumerate(responses):
+            if i < 2:
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.content.decode("utf-8"), '"Got it"')
+            else:
+                self.assertEqual(response.status_code, 429)
+                self.assertTrue("detail" in response.json())
+                self.assertEqual(response.json()["detail"], "Too Many Requests")
