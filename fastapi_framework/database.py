@@ -1,7 +1,7 @@
 import asyncio
 from asyncio import get_event_loop
 from os import getenv
-from typing import TypeVar, Optional, Type, Union
+from typing import TypeVar, Optional, Type, Union, Dict
 
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
@@ -62,21 +62,14 @@ class DB:
     _engine: AsyncEngine
     _session: AsyncSession
 
-    def __init__(self, driver: str, host: str, port: str, database: str, username: str, password: str):
+    def __init__(self, driver: str, options: Dict = {"pool_size": 20, "max_overflow": 20}, **kwargs):
+        url: str = URL.create(drivername=driver, **kwargs)
         self._engine = create_async_engine(
-            URL(
-                drivername=driver,
-                host=host,
-                port=port,
-                database=database,
-                username=username,
-                password=password,
-            ),
+            url,
             echo=True,
             pool_pre_ping=True,
             pool_recycle=300,
-            pool_size=20,
-            max_overflow=20,
+            **options
         )
         self.Base = declarative_base()
         self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
@@ -132,14 +125,24 @@ class DB:
 db: Union[DB, None] = None
 if "database" not in disabled_modules:
     logger = get_logger(__name__)
+    database: Dict = {
+        "host": getenv("DB_HOST", "localhost"),
+        "port": getenv("DB_PORT", "5432"),
+        "database": getenv("DB_DATABASE"),
+        "username": getenv("DB_USERNAME", "postgres"),
+        "password":  getenv("DB_PASSWORD", "")
 
+    }
+    database: Dict = dict([(k, v) for k, v in database.items() if v != ""])
+    options: Dict = {
+        "pool_size": getenv("DB_POOL_SIZE", "20"),
+        "max_overflow": getenv("DB_MAX_OVERFLOW", "20")
+    }
+    options: Dict = dict([(k, int(v)) for k, v in options.items() if v != ""])
     db: DB = DB(
         getenv("DB_DRIVER", "postgresql+asyncpg"),
-        getenv("DB_HOST", "localhost"),
-        getenv("DB_PORT", "5432"),
-        getenv("DB_DATABASE"),
-        getenv("DB_USERNAME", "postgres"),
-        getenv("DB_PASSWORD", ""),
+        options=options,
+        **database
     )
 
     logger.info("Connected to Database")
