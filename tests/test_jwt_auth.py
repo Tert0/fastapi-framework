@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from typing import Dict, Union
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch, AsyncMock
@@ -101,6 +101,13 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         decoded_data = await get_data(jwt_token)
         self.assertIsInstance(decoded_data, Dict)
         self.assertEqual(decoded_data, data)
+
+    @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
+    async def test_get_data_invalid_token(self):
+        data = {"exp": datetime.utcnow() - timedelta(minutes=10)}
+        jwt_token = jwt.encode(data, "TEST_SECRET_KEY", algorithm=ALGORITHM)
+        with self.assertRaises(HTTPException):
+            await get_data(jwt_token)
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_create_access_token(self):
