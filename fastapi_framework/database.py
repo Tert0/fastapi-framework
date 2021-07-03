@@ -64,13 +64,7 @@ class DB:
 
     def __init__(self, driver: str, options: Dict = {"pool_size": 20, "max_overflow": 20}, **kwargs):
         url: str = URL.create(drivername=driver, **kwargs)
-        self._engine = create_async_engine(
-            url,
-            echo=True,
-            pool_pre_ping=True,
-            pool_recycle=300,
-            **options
-        )
+        self._engine = create_async_engine(url, echo=True, pool_pre_ping=True, pool_recycle=300, **options)
         self.Base = declarative_base()
         self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
 
@@ -130,20 +124,12 @@ if "database" not in disabled_modules:
         "port": getenv("DB_PORT", "5432"),
         "database": getenv("DB_DATABASE"),
         "username": getenv("DB_USERNAME", "postgres"),
-        "password":  getenv("DB_PASSWORD", "")
-
+        "password": getenv("DB_PASSWORD", ""),
     }
     database: Dict = dict([(k, v) for k, v in database.items() if v != ""])
-    options: Dict = {
-        "pool_size": getenv("DB_POOL_SIZE", "20"),
-        "max_overflow": getenv("DB_MAX_OVERFLOW", "20")
-    }
+    options: Dict = {"pool_size": getenv("DB_POOL_SIZE", "20"), "max_overflow": getenv("DB_MAX_OVERFLOW", "20")}
     options: Dict = dict([(k, int(v)) for k, v in options.items() if v != ""])
-    db: DB = DB(
-        getenv("DB_DRIVER", "postgresql+asyncpg"),
-        options=options,
-        **database
-    )
+    db: DB = DB(getenv("DB_DRIVER", "postgresql+asyncpg"), options=options, **database)
 
     logger.info("Connected to Database")
 
