@@ -11,7 +11,9 @@ from passlib.context import CryptContext
 
 load_dotenv()
 
-SECRET_KEY = getenv("JWT_SECRET_KEY")
+SECRET_KEY = getenv("JWT_SECRET_KEY", "")
+if SECRET_KEY == "":
+    raise Exception("You have to set a Secret Key for JWT Auth")
 ALGORITHM = getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 REFRESH_TOKEN_EXPIRE_MINUTES = int(getenv("JWT_REFRESH_TOKEN_EXPIRE_MINUTES", f"{60 * 6}"))

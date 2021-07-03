@@ -1,8 +1,8 @@
-from typing import Union, Callable, Dict, Coroutine
+from typing import Union, Callable, Dict, Coroutine, Optional, Any
 
 from aioredis import Redis
 from fastapi import Request, HTTPException, Response
-from fastapi.security import HTTPBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from fastapi_framework import get_data
 from fastapi_framework.modules import disabled_modules
@@ -20,7 +20,10 @@ async def default_get_uuid(request: Request) -> str:
 
 async def get_uuid_user_id(request: Request):
     """Getter for UUID working with User IDs from the JWTs"""
-    token: str = (await (HTTPBearer())(request)).credentials
+    bearer_auth: Optional[HTTPAuthorizationCredentials] = (await (HTTPBearer())(request))
+    if not bearer_auth:
+        raise Exception("Cant get HTTPBearer Auth Token")
+    token: str = bearer_auth.credentials
     data: Dict = await get_data(token)
     return f"{data['user_id']}"
 
@@ -29,15 +32,15 @@ class RateLimitManager:
     """Rate Limit Manager for Redis, UUID Getter and the Error Callback"""
 
     redis: Redis
-    get_uuid: Union[Callable, Coroutine] = default_get_uuid
-    callback: Union[Callable, Coroutine] = default_callback
+    get_uuid: Callable = default_get_uuid
+    callback: Callable = default_callback
 
     @classmethod
     async def init(
         cls,
         redis: Redis,
-        get_uuid: Union[Callable, Coroutine] = default_get_uuid,
-        callback: Union[Callable, Coroutine] = default_callback,
+        get_uuid: Callable = default_get_uuid,
+        callback: Callable = default_callback,
     ):
         """Initialise Rate Limit Manager"""
         if "rate_limit" in disabled_modules:
@@ -63,15 +66,15 @@ class RateLimiter:
 
     count: int
     time: RateLimitTime
-    get_uuid: Union[Callable, Coroutine]
-    callback: Union[Callable, Coroutine]
+    get_uuid: Union[Callable, None]
+    callback: Union[Callable, None]
 
     def __init__(
         self,
         count,
         time: RateLimitTime,
-        get_uuid: Union[Callable, Coroutine, None] = None,
-        callback: Union[Callable, Coroutine, None] = None,
+        get_uuid: Union[Callable, None] = None,
+        callback: Union[Callable, None] = None,
     ):
         if "rate_limit" in disabled_modules:
             raise Exception("Module Rate Limit is disabled")
@@ -83,8 +86,8 @@ class RateLimiter:
     async def __call__(self, request: Request, response: Response):
         if not RateLimitManager.redis:
             raise Exception("You have to initialise the RateLimitManager at the Startup")
-        get_uuid: Callable = self.get_uuid or RateLimitManager.get_uuid
-        callback: Callable = self.callback or RateLimitManager.callback
+        get_uuid: Union[Callable] = self.get_uuid or RateLimitManager.get_uuid
+        callback: Union[Callable] = self.callback or RateLimitManager.callback
         uuid: Union[str, Coroutine] = get_uuid(request)
         if isinstance(uuid, Coroutine):
             uuid = await uuid
@@ -92,9 +95,7 @@ class RateLimiter:
         redis_key_lock: str = f"{redis_key}:lock"
         if await RateLimitManager.redis.exists(redis_key_lock):
             headers = await self.get_headers(redis_key)
-            result = None
-            if isinstance(callback, Callable):
-                result = callback(headers)
+            result: Any = callback(headers)
             if isinstance(result, Coroutine):
                 await result
             return

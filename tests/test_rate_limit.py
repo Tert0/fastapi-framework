@@ -21,7 +21,7 @@ app = FastAPI()
 
 @app.get("/limited", dependencies=[Depends(RateLimiter(2, RateLimitTime(seconds=5)))])
 async def limited_route():
-    return f"Got it"
+    return "Got it"
 
 
 class TestRateLimit(IsolatedAsyncioTestCase):
