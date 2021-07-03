@@ -8,3 +8,5 @@ services:
     env_file: test.env
     depends_on:
       - redis
+    volumes:
+    - "coverage.xml":"coverage.xml"

@@ -12,28 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2.2.2
-        with:
-          python-version: 3.9
-
-      - name: Install Dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install coverage httpx
-
-      - name: Start Redis
-        uses: supercharge/redis-github-action@1.2.0
-        with:
-          redis-version: 5
-
       - name: Run unit tests with coverage
-        env:
-          SECRET_KEY: "1afbb6ce858a3f28e0458e3e9dc45c35d7e8fd76be4e7fab6e93ef696d5372db"
-        run: |
-          chmod +x coverage.sh
-          ./coverage.sh
+        run: docker-compose up --build
 
       - name: Send coverage report to codeclimate
         env:
