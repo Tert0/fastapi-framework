@@ -126,9 +126,9 @@ if "database" not in disabled_modules:
         "username": getenv("DB_USERNAME", "postgres"),
         "password": getenv("DB_PASSWORD", ""),
     }
-    database: Dict = dict([(k, v) for k, v in database.items() if v != ""])
+    database = dict([(k, v) for k, v in database.items() if v != ""])
     options: Dict = {"pool_size": getenv("DB_POOL_SIZE", "20"), "max_overflow": getenv("DB_MAX_OVERFLOW", "20")}
-    options: Dict = dict([(k, int(v)) for k, v in options.items() if v != ""])
+    options = dict([(k, int(v)) for k, v in options.items() if v != ""])
     db: DB = DB(getenv("DB_DRIVER", "postgresql+asyncpg"), options=options, **database)
 
     logger.info("Connected to Database")

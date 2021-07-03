@@ -28,7 +28,7 @@ async def get_uuid_user_id(request: Request):
 class RateLimitManager:
     """Rate Limit Manager for Redis, UUID Getter and the Error Callback"""
 
-    redis: Union[Redis, None] = None
+    redis: Redis
     get_uuid: Union[Callable, Coroutine] = default_get_uuid
     callback: Union[Callable, Coroutine] = default_callback
 
@@ -87,7 +87,7 @@ class RateLimiter:
         callback: Callable = self.callback or RateLimitManager.callback
         uuid: Union[str, Coroutine] = get_uuid(request)
         if isinstance(uuid, Coroutine):
-            uuid: str = await uuid
+            uuid = await uuid
         redis_key: str = f"rate_limit:{request.url.path}:{uuid}"
         redis_key_lock: str = f"{redis_key}:lock"
         if await RateLimitManager.redis.exists(redis_key_lock):
@@ -120,7 +120,7 @@ class RateLimiter:
             redis_value or (0 if await RateLimitManager.redis.exists(f"{redis_key}:lock") else self.count)
         )
         ttl: int = await RateLimitManager.redis.ttl(redis_key)
-        ttl: int = ttl if ttl != -2 else await RateLimitManager.redis.ttl(f"{redis_key}:lock")
-        ttl: int = ttl if ttl != -2 else 0
+        ttl = ttl if ttl != -2 else await RateLimitManager.redis.ttl(f"{redis_key}:lock")
+        ttl = ttl if ttl != -2 else 0
         headers["X-Rate-Limit-Reset"] = f"{ttl}"
         return headers
