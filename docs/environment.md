@@ -6,13 +6,15 @@ set if you want to use a Database or Redis.
 ## Database
 
 Name         | Default              | Description
--------------|----------------------|------------
-`DB_DRIVER`  | `postgresql+asyncpg` | The Database Driver to use
-`DB_HOST`    | `localhost`          | Host of the DB Server
-`DB_PORT`    | `5432`               | Port of the Database
-`DB_USERNAME`| `postgres`           | Database Username
-`DB_PASSWORD`| ` `                  | Database Password
-`DB_DATABASE`|                      | Name of the Database
+-----------------|----------------------|------------
+`DB_DRIVER`      | `postgresql+asyncpg` | The Database Driver to use
+`DB_HOST`        | `localhost`          | Host of the DB Server
+`DB_PORT`        | `5432`               | Port of the Database
+`DB_USERNAME`    | `postgres`           | Database Username
+`DB_PASSWORD`    | ` `                  | Database Password
+`DB_DATABASE`    |                      | Name of the Database
+`DB_POOL_SIZE`   | `20`                 | Database Connection Pool Size
+`DB_MAX_OVERFLOW`| `20`                 | Max Pool Size
 
 ## Redis
 Name         | Default              | Description
