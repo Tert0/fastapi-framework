@@ -30,7 +30,7 @@ async def get_users():
 
 
 @app.get("/users/{name}")
-async def get_users(name: str):
+async def get_user_by_name(name: str):
     return await db.all(select(User).filter_by(name=name))
 
 
