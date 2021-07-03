@@ -8,7 +8,8 @@ from fastapi_framework.rate_limit import (
     RateLimiter,
     RateLimitTime,
     default_get_uuid,
-    default_callback, get_uuid_user_id,
+    default_callback,
+    get_uuid_user_id,
 )
 from fastapi_framework import rate_limit
 
@@ -76,5 +77,3 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         uuid = await get_uuid_user_id(request)
         get_data_patch.assert_called_once_with("test_bearer_token")
         self.assertEqual(uuid, "5")
-
-
