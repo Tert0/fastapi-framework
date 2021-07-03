@@ -20,7 +20,7 @@ async def default_get_uuid(request: Request) -> str:
 
 async def get_uuid_user_id(request: Request):
     """Getter for UUID working with User IDs from the JWTs"""
-    bearer_auth: Optional[HTTPAuthorizationCredentials] = (await (HTTPBearer())(request))
+    bearer_auth: Optional[HTTPAuthorizationCredentials] = await (HTTPBearer())(request)
     if not bearer_auth:
         raise Exception("Cant get HTTPBearer Auth Token")
     token: str = bearer_auth.credentials
