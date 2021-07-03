@@ -16,7 +16,7 @@ jobs:
         run: touch coverage.xml
 
       - name: Run unit tests with coverage
-        run: docker-compose up --build
+        run: docker-compose up --build -d
 
       - name: Send coverage report to codeclimate
         env:
