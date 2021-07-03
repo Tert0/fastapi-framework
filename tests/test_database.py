@@ -1,6 +1,6 @@
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch, AsyncMock
-from fastapi_framework.database import select, filter_by, exists, delete
+from fastapi_framework.database import select, filter_by, exists, delete, db
 
 
 class TestDatabase(IsolatedAsyncioTestCase):
@@ -54,3 +54,9 @@ class TestDatabase(IsolatedAsyncioTestCase):
 
         sa_delete.assert_called_once_with(model)
         self.assertEqual(result, sa_delete())
+
+    @patch("fastapi_framework.database.db._session")
+    async def test_add_row(self, async_session_patch: AsyncMock):
+        row = MagicMock()
+        await db.add(row)
+        async_session_patch.add.assert_called_with(row)
