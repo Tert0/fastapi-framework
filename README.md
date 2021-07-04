@@ -22,12 +22,12 @@ pip install fastapi-framework
 For the Documentation click [here](https://tert0.github.io/fastapi-framework)
 
 # Features
-- [x] Database
-- [x] Redis
-- [ ] Redis Publish/Subscribe
-- [x] FastAPI JWT
-- [ ] FastAPI Permission System (for routes)
-- [x] Rate Limits
+- ✅ Database
+- ✅ Redis
+- ✅ Redis Publish/Subscribe
+- ✅ FastAPI JWT
+- ❌ FastAPI Permission System (for routes)
+- ✅ Rate Limits
 
 
 # License
