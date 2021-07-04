@@ -2,7 +2,7 @@ from aioredis import Redis, create_redis_pool, create_redis
 from dotenv import load_dotenv
 from os import getenv
 
-from fastapi_framework.modules import disabled_modules
+from .modules import disabled_modules
 
 load_dotenv()
 

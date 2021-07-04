@@ -4,8 +4,8 @@ from aioredis import Redis
 from fastapi import Request, HTTPException, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from fastapi_framework import get_data
-from fastapi_framework.modules import disabled_modules
+from .jwt_auth import get_data
+from .modules import disabled_modules
 
 
 async def default_callback(headers: Dict):

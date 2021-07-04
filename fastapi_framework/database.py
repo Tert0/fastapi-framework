@@ -1,4 +1,3 @@
-import asyncio
 from asyncio import get_event_loop
 from os import getenv
 from typing import TypeVar, Optional, Type, Union, Dict

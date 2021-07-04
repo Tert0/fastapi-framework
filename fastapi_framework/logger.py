@@ -3,7 +3,7 @@ import sys
 from dotenv import load_dotenv
 from os import getenv
 
-from fastapi_framework.modules import disabled_modules
+from .modules import disabled_modules
 
 load_dotenv()
 LOG_LEVEL = getenv("LOG_LEVEL", "INFO")
