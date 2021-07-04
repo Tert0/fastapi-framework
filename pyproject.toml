@@ -3,6 +3,7 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
+dist-name = "fastapi-framework"
 module = "fastapi_framework"
 author = "Tert0"
 home-page = "https://github.com/Tert0/fastapi-framework"
