@@ -8,12 +8,22 @@ on:
 
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: casperdcl/deploy-pypi@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          password: ${{ secrets.PYPI_TOKEN }}
-          pip: wheel -w dist/ --no-deps .
+          python-version: "3.6"
+
+      - name: Install Flit
+        run: pip install flit
+
+      - name: Publish
+        env:
+          FLIT_USERNAME: ${{ secrets.FLIT_USERNAME }}
+          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: flit publish
