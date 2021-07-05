@@ -1,8 +1,7 @@
-import asyncio
 from os import getenv
 from typing import Union, List, Dict
 from unittest import IsolatedAsyncioTestCase
-from unittest.mock import MagicMock, patch, AsyncMock
+from unittest.mock import MagicMock, patch
 
 from fastapi import HTTPException, FastAPI, Depends
 from sqlalchemy import Column, String, Integer

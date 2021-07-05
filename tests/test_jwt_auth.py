@@ -34,7 +34,7 @@ async def token_route(username: str, password: str, redis: Redis = Depends(redis
     user: Union[Dict[str, str], None] = None
     for user_item in users:
         if user_item["username"] == username:
-            user = user_item.copy()
+            user = dict(user_item.copy())
             break
 
     if (user is None) or password != user["password"]:
@@ -59,7 +59,7 @@ async def refresh_route(refresh_token: str, redis: Redis = Depends(redis_depende
     username: str = ""
     for user in users:
         if user["user_id"] == user_id:
-            username = user["username"]
+            username = str(user["username"])
     await invalidate_refresh_token(refresh_token, redis)
     return await generate_tokens({"user": {"id": user_id, "username": username}}, int(user_id), redis)
 
@@ -208,5 +208,6 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "")
     async def test_empty_secret_key(self):
         from fastapi_framework.jwt_auth import check_secret_key
+
         with self.assertRaises(Exception):
             check_secret_key()
