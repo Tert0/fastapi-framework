@@ -160,7 +160,7 @@ class TestDatabase(IsolatedAsyncioTestCase):
 
     async def test_remove_user_not_exists(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
-            response: Response = await ac.delete(f"/users/this_username_dont_exists")
+            response: Response = await ac.delete("/users/this_username_dont_exists")
         self.assertEqual(response.status_code, 404)
 
     async def test_initialise_database_multiple_time(self):
