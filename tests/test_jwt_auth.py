@@ -204,3 +204,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
             response: Response = await ac.get("/secret", headers={"Authorization": f"Bearer {access_token}"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode("utf-8"), '"Hello!"')
+
+    @patch("fastapi_framework.jwt_auth.SECRET_KEY", "")
+    async def test_empty_secret_key(self):
+        from fastapi_framework.jwt_auth import check_secret_key
+        with self.assertRaises(Exception):
+            check_secret_key()
