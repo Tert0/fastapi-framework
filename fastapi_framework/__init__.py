@@ -5,7 +5,7 @@ __version__ = "1.1.1"
 from .modules import check_dependencies, disabled_modules
 
 check_dependencies()  # noqa: FLK-E402
-from .database import db
+from .database import database_dependency
 from .jwt_auth import (
     create_jwt_token,
     create_access_token,

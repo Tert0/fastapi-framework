@@ -1,12 +1,14 @@
-from asyncio import get_event_loop
+from asyncio import new_event_loop
 from os import getenv
 from typing import TypeVar, Optional, Type, Union, Dict
 
+from aioredis.util import get_event_loop
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession
 from sqlalchemy.future import select as sa_select
 from sqlalchemy.orm import DeclarativeMeta, declarative_base, selectinload, sessionmaker
+from sqlalchemy.pool import NullPool
 from sqlalchemy.sql import Executable
 from sqlalchemy.sql.expression import exists as sa_exists, delete as sa_delete, Delete
 from sqlalchemy.sql.functions import count
@@ -20,23 +22,10 @@ load_dotenv()
 T = TypeVar("T")
 
 
-def select(entity, *args) -> Select:
+def select(entity) -> Select:
     """Shortcut for :meth:`sqlalchemy.future.select`"""
-    if not args:
-        return sa_select(entity)
 
-    options = []
-    for arg in args:
-        if isinstance(arg, (tuple, list)):
-            head, *tail = arg
-            opt = selectinload(head)
-            for x in tail:
-                opt = opt.selectinload(x)
-            options.append(opt)
-        else:
-            options.append(selectinload(arg))
-
-    return sa_select(entity).options(*options)
+    return sa_select(entity)
 
 
 def filter_by(cls, *args, **kwargs) -> Select:
@@ -106,32 +95,55 @@ class DB:
         """Counts matches for a Query"""
         return await self.first(select(count()).select_from(*args, **kwargs))
 
-    async def get(self, cls: Type[T], *args, **kwargs) -> Optional[T]:
-        """Returns first element of the Query from filter_by(cls, *args, **kwargs)"""
-        return await self.first(filter_by(cls, *args, **kwargs))
-
     async def commit(self):
         """Commits/Saves changes to Database"""
         await self._session.commit()
 
 
-db: Union[DB, None] = None
-if "database" not in disabled_modules:
-    logger = get_logger(__name__)
-    database: Dict = {
-        "host": getenv("DB_HOST", "localhost"),
-        "port": getenv("DB_PORT", "5432"),
-        "database": getenv("DB_DATABASE"),
-        "username": getenv("DB_USERNAME", "postgres"),
-        "password": getenv("DB_PASSWORD", ""),
-    }
-    database = dict([(k, v) for k, v in database.items() if v != ""])
-    options: Dict = {"pool_size": getenv("DB_POOL_SIZE", "20"), "max_overflow": getenv("DB_MAX_OVERFLOW", "20")}
-    options = dict([(k, int(v)) for k, v in options.items() if v != ""])
-    db = DB(getenv("DB_DRIVER", "postgresql+asyncpg"), options=options, **database)
+logger = get_logger(__name__)
 
-    logger.info("Connected to Database")
 
-    loop = get_event_loop()
-    logger.info("Create Tables")
-    loop.create_task(db.create_tables())
+class DatabaseDependency:
+    db: DB
+    database_url_options: Dict
+    engine_options: Dict
+    initialised: bool = False
+
+    def __init__(self):
+        self.database_url_options = {
+            "host": getenv("DB_HOST", "localhost"),
+            "port": getenv("DB_PORT", "5432"),
+            "database": getenv("DB_DATABASE"),
+            "username": getenv("DB_USERNAME", "postgres"),
+            "password": getenv("DB_PASSWORD", ""),
+        }
+        self.database_url_options = dict([(k, v) for k, v in self.database_url_options.items() if v != ""])
+        self.engine_options: Dict = {
+            "pool_size": getenv("DB_POOL_SIZE", "20"),
+            "max_overflow": getenv("DB_MAX_OVERFLOW", "20"),
+            "poolclass": True if getenv("DB_POOL", "True").lower() == "true" else False,
+        }
+        self.engine_options = dict([(k, int(v)) for k, v in self.engine_options.items() if v != ""])
+        if self.engine_options["poolclass"] == 1:
+            self.engine_options["poolclass"] = NullPool
+        else:
+            del self.engine_options["poolclass"]
+        self.db = DB(
+            getenv("DB_DRIVER", "postgresql+asyncpg"), options=self.engine_options, **self.database_url_options
+        )
+        logger.info("Connected to Database")
+
+    async def init(self) -> None:
+        if self.initialised:
+            return
+        logger.info("Create Tables")
+        await self.db.create_tables()
+        self.initialised = True
+
+    async def __call__(self) -> DB:
+        if not self.initialised:
+            await self.init()
+        return self.db
+
+
+database_dependency = DatabaseDependency()
