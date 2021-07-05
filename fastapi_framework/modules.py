@@ -23,11 +23,10 @@ def check_dependencies():
     for module in dependencies:  # type: str
         if module in disabled_modules:
             continue
-        for module_dependency in dependencies[module]:
+        for module_dependency in [
+            needed_dependency for needed_dependency in dependencies[module] if needed_dependency in disabled_modules
+        ]:
             needed_dependencies.add((module, module_dependency))
-    needed_dependencies: List[tuple[str, str]] = [
-        needed_dependency for needed_dependency in needed_dependencies if needed_dependency[1] in disabled_modules
-    ]
     if len(needed_dependencies) == 0:
         return
     raise Exception(f"Module '{needed_dependencies[0][0]}' needs the disabled Module '{needed_dependencies[0][1]}'")

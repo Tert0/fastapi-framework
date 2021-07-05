@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 from fastapi import HTTPException, FastAPI, Depends
 from sqlalchemy import Column, String, Integer
 
-from fastapi_framework.database import select, filter_by, exists, delete, database_dependency, DB
+from fastapi_framework.database import select, filter_by, exists, delete, database_dependency, DB, DatabaseDependency
 
 from httpx import AsyncClient, Response
 from random import choices
@@ -154,7 +154,6 @@ class TestDatabase(IsolatedAsyncioTestCase):
         self.assertEqual(response.status_code, 200)
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response = await ac.delete(f"/users/{username}")
-        print(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode("utf-8"), "true")
 
@@ -177,3 +176,7 @@ class TestDatabase(IsolatedAsyncioTestCase):
     async def test_create_tables(self):
         db: DB = await database_dependency()
         await db.create_tables()
+
+    @patch("fastapi_framework.database.DB_POOL", False)
+    async def test_init_database_dependency_without_pool(self):
+        DatabaseDependency()

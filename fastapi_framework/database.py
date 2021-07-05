@@ -102,6 +102,15 @@ class DB:
 
 logger = get_logger(__name__)
 
+DB_HOST = getenv("DB_HOST", "localhost")
+DB_PORT = getenv("DB_PORT", "5432")
+DB_DATABASE = getenv("DB_DATABASE")
+DB_USERNAME = getenv("DB_USERNAME", "postgres")
+DB_PASSWORD = getenv("DB_PASSWORD", "")
+DB_POOL_SIZE = getenv("DB_POOL_SIZE", "20")
+DB_MAX_OVERFLOW = getenv("DB_MAX_OVERFLOW", "20")
+DB_POOL = True if getenv("DB_POOL", "True").lower() == "true" else False
+
 
 class DatabaseDependency:
     db: DB
@@ -111,20 +120,21 @@ class DatabaseDependency:
 
     def __init__(self):
         self.database_url_options = {
-            "host": getenv("DB_HOST", "localhost"),
-            "port": getenv("DB_PORT", "5432"),
-            "database": getenv("DB_DATABASE"),
-            "username": getenv("DB_USERNAME", "postgres"),
-            "password": getenv("DB_PASSWORD", ""),
+            "host": DB_HOST,
+            "port": DB_PORT,
+            "database": DB_DATABASE,
+            "username": DB_USERNAME,
+            "password": DB_PASSWORD,
         }
         self.database_url_options = dict([(k, v) for k, v in self.database_url_options.items() if v != ""])
         self.engine_options: Dict = {
-            "pool_size": getenv("DB_POOL_SIZE", "20"),
-            "max_overflow": getenv("DB_MAX_OVERFLOW", "20"),
-            "poolclass": True if getenv("DB_POOL", "True").lower() == "true" else False,
+            "pool_size": DB_POOL_SIZE,
+            "max_overflow": DB_MAX_OVERFLOW,
+            "poolclass": DB_POOL,
         }
+        print(f"Test 111: {DB_POOL}")
         self.engine_options = dict([(k, int(v)) for k, v in self.engine_options.items() if v != ""])
-        if self.engine_options["poolclass"] == 1:
+        if self.engine_options["poolclass"] == 0:
             self.engine_options["poolclass"] = NullPool
         else:
             del self.engine_options["poolclass"]
@@ -137,8 +147,8 @@ class DatabaseDependency:
         if self.initialised:
             return
         logger.info("Create Tables")
-        await self.db.create_tables()
         self.initialised = True
+        await self.db.create_tables()
 
     async def __call__(self) -> DB:
         if not self.initialised:

@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from typing import Dict, Union
+from typing import Dict, Union, List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch, AsyncMock
 
@@ -23,7 +23,7 @@ from fastapi_framework.jwt_auth import (
 
 app = FastAPI()
 
-users = [
+users: List[Dict[str, Union[str, int]]] = [
     {"user_id": 1, "username": "test", "password": "123"},
     {"user_id": 2, "username": "admin", "password": "AdminPassword"},
 ]
@@ -31,10 +31,10 @@ users = [
 
 @app.get("/token")
 async def token_route(username: str, password: str, redis: Redis = Depends(redis_dependency)):
-    user: Union[Dict[str, str], None] = None
+    user: Union[Dict[str, Union[str, int]], None] = None
     for user_item in users:
         if user_item["username"] == username:
-            user = dict(user_item.copy())
+            user = user_item.copy()  # noqa
             break
 
     if (user is None) or password != user["password"]:
