@@ -20,9 +20,7 @@ disabled_modules: List[str] = list(
 def check_dependencies():
     """Checks if Dependencies exists"""
     needed_dependencies: Set[tuple[str, str]] = set()
-    for module in dependencies:  # type: str
-        if module in disabled_modules:
-            continue
+    for module in [dependency for dependency in dependencies if dependency not in disabled_modules]:
         for module_dependency in [
             needed_dependency for needed_dependency in dependencies[module] if needed_dependency in disabled_modules
         ]:
