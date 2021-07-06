@@ -21,7 +21,6 @@ def check_secret_key():
 
 check_secret_key()
 
-print(f"Sec Key: {SECRET_KEY}")
 ALGORITHM = getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 REFRESH_TOKEN_EXPIRE_MINUTES = int(getenv("JWT_REFRESH_TOKEN_EXPIRE_MINUTES", f"{60 * 6}"))
