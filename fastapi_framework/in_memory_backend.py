@@ -45,8 +45,8 @@ class RAMBackendItem:
 
 class RAMBackend(InMemoryBackend):
     data: Dict[str, RAMBackendItem] = {}
-    SET_IF_NOT_EXIST = 'SET_IF_NOT_EXIST'  # NX
-    SET_IF_EXIST = 'SET_IF_EXIST'  # XX
+    SET_IF_NOT_EXIST = "SET_IF_NOT_EXIST"  # NX
+    SET_IF_EXIST = "SET_IF_EXIST"  # XX
 
     async def _check_key_expire(self, key: str, item: RAMBackendItem):
         timestamp = int(time.time() * 1000)
