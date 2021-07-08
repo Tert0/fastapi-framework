@@ -132,7 +132,6 @@ class DatabaseDependency:
             "max_overflow": DB_MAX_OVERFLOW,
             "poolclass": DB_POOL,
         }
-        print(f"Test 111: {DB_POOL}")
         self.engine_options = dict([(k, int(v)) for k, v in self.engine_options.items() if v != ""])
         if self.engine_options["poolclass"] == 0:
             self.engine_options["poolclass"] = NullPool
