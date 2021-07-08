@@ -1,5 +1,5 @@
 import time
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Set
 from abc import ABC
 
 
@@ -30,6 +30,15 @@ class InMemoryBackend(ABC):
 
     async def delete(self, key: str):
         """Delete value of a Key"""
+
+    async def smembers(self, key: str) -> Set:
+        """Gets Set Members"""
+
+    async def sadd(self, key: str, value: Any) -> bool:
+        """Adds a Member to a Dict"""
+
+    async def srem(self, key: str, member: Any) -> bool:
+        """Removes a Member from a Set"""
 
 
 class RAMBackendItem:
@@ -134,3 +143,25 @@ class RAMBackend(InMemoryBackend):
         if key not in self.data:
             return
         del self.data[key]
+
+    async def smembers(self, key: str) -> Set:
+        return await self.get(key)
+
+    async def sadd(self, key: str, value: Any) -> bool:
+        data: Optional[Set] = await self.get(key)
+        if not data:
+            data = {value}
+        else:
+            data.add(value)
+        await self.set(key, data)
+        return True
+
+    async def srem(self, key: str, member: Any) -> bool:
+        data: Optional[Set] = await self.get(key)
+        if not data:
+            return False
+        if member not in data:
+            return False
+        data.remove(member)
+        await self.set(key, data)
+        return True
