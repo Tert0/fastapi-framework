@@ -1,4 +1,3 @@
-from collections import Coroutine
 from typing import List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import AsyncMock, patch, MagicMock

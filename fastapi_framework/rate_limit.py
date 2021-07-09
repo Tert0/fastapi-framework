@@ -6,6 +6,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from .jwt_auth import get_data
 from .modules import disabled_modules
+from .redis import RedisBackend
 
 
 async def default_callback(headers: Dict):
@@ -31,14 +32,14 @@ async def get_uuid_user_id(request: Request):
 class RateLimitManager:
     """Rate Limit Manager for Redis, UUID Getter and the Error Callback"""
 
-    redis: Redis
+    redis: RedisBackend
     get_uuid: Callable = default_get_uuid
     callback: Callable = default_callback
 
     @classmethod
     async def init(
         cls,
-        redis: Redis,
+        redis: RedisBackend,
         get_uuid: Callable = default_get_uuid,
         callback: Callable = default_callback,
     ):

@@ -40,6 +40,9 @@ class InMemoryBackend(ABC):
     async def srem(self, key: str, member: Any) -> bool:
         """Removes a Member from a Set"""
 
+    async def exists(self, key: str) -> bool:
+        """Checks if a Key exists"""
+
 
 class RAMBackendItem:
     value: Any
@@ -165,3 +168,6 @@ class RAMBackend(InMemoryBackend):
         data.remove(member)
         await self.set(key, data)
         return True
+
+    async def exists(self, key: str) -> bool:
+        return key in self.data

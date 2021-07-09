@@ -177,3 +177,8 @@ class TestInMemoryBackend(IsolatedAsyncioTestCase):
 
     async def test_srem_key_dont_exists(self):
         self.assertEqual(await ram_backend.srem("test_srem_key_dont_exists", "test"), False)
+
+    async def test_exists(self):
+        self.assertEqual(await ram_backend.exists("test_exists"), False)
+        await ram_backend.set("test_exists", "test_value")
+        self.assertEqual(await ram_backend.exists("test_exists"), True)
