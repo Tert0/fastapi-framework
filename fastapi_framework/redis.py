@@ -1,4 +1,4 @@
-from typing import Set, Any
+from typing import Set, Any, Optional
 
 from aioredis import Redis, create_redis_pool, create_redis
 from dotenv import load_dotenv
@@ -65,7 +65,7 @@ class RedisBackend(InMemoryBackend):
 class RedisDependency:
     """FastAPI Dependency for Redis Connections"""
 
-    redis: RedisBackend = None
+    redis: Optional[RedisBackend] = None
 
     async def __call__(self):
         return self.redis
