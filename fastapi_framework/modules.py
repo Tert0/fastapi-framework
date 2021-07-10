@@ -9,8 +9,8 @@ dependencies = {
     "redis": [],
     "database": [],
     "logger": [],
-    "jwt_auth": ["redis"],
-    "rate_limit": ["redis"],
+    "jwt_auth": [],
+    "rate_limit": [],
 }
 disabled_modules: List[str] = list(
     map(str.lower, getenv("DISABLED_MODULES", "").replace(" ", "").replace(",", ";").split(";"))
@@ -27,4 +27,4 @@ def check_dependencies():
             needed_dependencies.add((module, module_dependency))
     if len(needed_dependencies) == 0:
         return
-    raise Exception(f"Module '{needed_dependencies[0][0]}' needs the disabled Module '{needed_dependencies[0][1]}'")
+    raise Exception(f"Module '{needed_dependencies.pop()[0]}' needs the disabled Module '{needed_dependencies.pop()[1]}'")

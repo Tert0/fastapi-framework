@@ -45,7 +45,7 @@ class InMemoryBackend(ABC):
 
 
 class RAMBackendItem:
-    value: Any
+    value: bytes
     pexpire: int
     timestamp: int
 
@@ -68,6 +68,8 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def set(self, key: str, value, expire: int = 0, pexpire: int = 0, exists=None):
+        if not isinstance(value, bytes):
+            value = bytes(str(value), "utf-8")
         if exists == self.SET_IF_NOT_EXIST:
             if key in self.data:
                 return
@@ -125,22 +127,24 @@ class RAMBackend(InMemoryBackend):
         if not item:
             await self.set(key, 1)
             return 1
-        if not isinstance(item.value, int):
+        try:
+            item.value = bytes(str(int(item.value.decode("utf-8")) + 1), "utf-8")
+        except ValueError:
             raise Exception("Value must be a Int")
-        item.value += 1
         self.data[key] = item
-        return item.value
+        return int(item.value.decode("utf-8"))
 
     async def decr(self, key: str) -> int:
         item: Optional[RAMBackendItem] = self.data.get(key)
         if not item:
             await self.set(key, -1)
             return -1
-        if not isinstance(item.value, int):
+        try:
+            item.value = bytes(str(int(item.value.decode("utf-8")) - 1), "utf-8")
+        except ValueError:
             raise Exception("Value must be a Int")
-        item.value -= 1
         self.data[key] = item
-        return item.value
+        return int(item.value.decode("utf-8"))
 
     async def delete(self, key: str):
         if key not in self.data:

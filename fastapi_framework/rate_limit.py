@@ -1,12 +1,11 @@
 from typing import Union, Callable, Dict, Coroutine, Optional, Any
 
-from aioredis import Redis
 from fastapi import Request, HTTPException, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+from .in_memory_backend import InMemoryBackend
 from .jwt_auth import get_data
 from .modules import disabled_modules
-from .redis import RedisBackend
 
 
 async def default_callback(headers: Dict):
@@ -32,14 +31,14 @@ async def get_uuid_user_id(request: Request):
 class RateLimitManager:
     """Rate Limit Manager for Redis, UUID Getter and the Error Callback"""
 
-    redis: RedisBackend
+    redis: InMemoryBackend
     get_uuid: Callable = default_get_uuid
     callback: Callable = default_callback
 
     @classmethod
     async def init(
         cls,
-        redis: RedisBackend,
+        redis: InMemoryBackend,
         get_uuid: Callable = default_get_uuid,
         callback: Callable = default_callback,
     ):

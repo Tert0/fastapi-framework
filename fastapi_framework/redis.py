@@ -1,13 +1,15 @@
 from typing import Set, Any, Optional
 
-from aioredis import Redis, create_redis_pool, create_redis
+from aioredis import create_redis_pool
 from dotenv import load_dotenv
 from os import getenv
-from .in_memory_backend import InMemoryBackend
+from .in_memory_backend import InMemoryBackend, RAMBackend
 
 from .modules import disabled_modules
 
 load_dotenv()
+
+Redis = InMemoryBackend
 
 REDIS_HOST = getenv("REDIS_HOST", "localhost")
 REDIS_PORT = getenv("REDIS_PORT", "6379")
@@ -65,7 +67,7 @@ class RedisBackend(InMemoryBackend):
 class RedisDependency:
     """FastAPI Dependency for Redis Connections"""
 
-    redis: Optional[RedisBackend] = None
+    redis: Optional[InMemoryBackend] = None
 
     async def __call__(self):
         return self.redis
@@ -73,8 +75,9 @@ class RedisDependency:
     async def init(self):
         """Initialises the Redis Dependency"""
         if "redis" in disabled_modules:
-            raise Exception("Module Redis is disabled")
-        self.redis = await RedisBackend.init(f"redis://{REDIS_HOST}:{REDIS_PORT}")
+            self.redis = RAMBackend()
+        else:
+            self.redis = await RedisBackend.init(f"redis://{REDIS_HOST}:{REDIS_PORT}")
 
 
 redis_dependency: RedisDependency = RedisDependency()
