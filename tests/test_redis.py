@@ -2,7 +2,7 @@ from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch, MagicMock, AsyncMock
 
 from fastapi_framework.redis import RedisDependency, get_redis, RedisBackend
-from fastapi_framework import redis
+from fastapi_framework import redis, RAMBackend
 
 
 class TestRedis(IsolatedAsyncioTestCase):
@@ -17,9 +17,10 @@ class TestRedis(IsolatedAsyncioTestCase):
     @patch.object(redis, "disabled_modules", ["redis"])
     async def test_redis_dependency_init_disabled_redis(self):
         redis_dependency: RedisDependency = RedisDependency()
-        self.assertEqual(redis_dependency.redis, None)
-        with self.assertRaises(Exception):
-            await redis_dependency.init()
+
+        await redis_dependency.init()
+
+        self.assertIsInstance(redis_dependency.redis, RAMBackend)
 
     async def test_redis_dependency_call(self):
         redis_dependency: RedisDependency = RedisDependency()

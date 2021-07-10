@@ -1,5 +1,5 @@
 import time
-from typing import Dict, Any, Optional, Set
+from typing import Dict, Any, Optional, Set, Union, List
 from abc import ABC
 
 
@@ -45,7 +45,7 @@ class InMemoryBackend(ABC):
 
 
 class RAMBackendItem:
-    value: bytes
+    value: Union[bytes, List]
     pexpire: int
     timestamp: int
 
@@ -68,7 +68,7 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def set(self, key: str, value, expire: int = 0, pexpire: int = 0, exists=None):
-        if not isinstance(value, bytes):
+        if not isinstance(value, bytes) and not isinstance(value, List):
             value = bytes(str(value), "utf-8")
         if exists == self.SET_IF_NOT_EXIST:
             if key in self.data:
@@ -152,25 +152,32 @@ class RAMBackend(InMemoryBackend):
         del self.data[key]
 
     async def smembers(self, key: str) -> Set:
-        return await self.get(key)
+        data: Optional[Union[bytes, List]] = await self.get(key)
+        if not data:
+            return set()
+        if not isinstance(data, list):
+            return {data}
+        return set(data)
 
     async def sadd(self, key: str, value: Any) -> bool:
-        data: Optional[Set] = await self.get(key)
-        if not data:
-            data = {value}
+        data: Optional[Union[bytes, List]] = await self.get(key)
+        if not data or not isinstance(data, List):
+            data: Set = {value}
         else:
+            data: Set = set(data)
             data.add(value)
-        await self.set(key, data)
+        await self.set(key, list(data))
         return True
 
     async def srem(self, key: str, member: Any) -> bool:
-        data: Optional[Set] = await self.get(key)
-        if not data:
+        data: Optional[Union[bytes, List]] = await self.get(key)
+        if not data or not isinstance(data, List):
             return False
+        data: Set = set(data)
         if member not in data:
             return False
         data.remove(member)
-        await self.set(key, data)
+        await self.set(key, list(data))
         return True
 
     async def exists(self, key: str) -> bool:
