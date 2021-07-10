@@ -27,4 +27,6 @@ def check_dependencies():
             needed_dependencies.add((module, module_dependency))
     if len(needed_dependencies) == 0:
         return
-    raise Exception(f"Module '{needed_dependencies.pop()[0]}' needs the disabled Module '{needed_dependencies.pop()[1]}'")
+    raise Exception(
+        f"Module '{needed_dependencies.pop()[0]}' needs the disabled Module '{needed_dependencies.pop()[1]}'"
+    )
