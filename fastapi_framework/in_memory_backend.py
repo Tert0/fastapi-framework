@@ -67,7 +67,7 @@ class RAMBackend(InMemoryBackend):
             return False
         return True
 
-    async def set(self, key: str, value, expire: int = 0, pexpire: int = 0, exists=None):
+    async def set(self, key: str, value: Any, expire: int = 0, pexpire: int = 0, exists=None):
         if not isinstance(value, bytes) and not isinstance(value, List):
             value = bytes(str(value), "utf-8")
         if exists == self.SET_IF_NOT_EXIST:
@@ -128,6 +128,8 @@ class RAMBackend(InMemoryBackend):
             await self.set(key, 1)
             return 1
         try:
+            if not isinstance(item.value, bytes):
+                raise Exception("Value must be a Int")
             item.value = bytes(str(int(item.value.decode("utf-8")) + 1), "utf-8")
         except ValueError:
             raise Exception("Value must be a Int")
@@ -140,6 +142,8 @@ class RAMBackend(InMemoryBackend):
             await self.set(key, -1)
             return -1
         try:
+            if not isinstance(item.value, bytes):
+                raise Exception("Value must be a Int")
             item.value = bytes(str(int(item.value.decode("utf-8")) - 1), "utf-8")
         except ValueError:
             raise Exception("Value must be a Int")
@@ -160,20 +164,20 @@ class RAMBackend(InMemoryBackend):
         return set(data)
 
     async def sadd(self, key: str, value: Any) -> bool:
-        data: Optional[Union[bytes, List]] = await self.get(key)
+        data: Union[Optional[Union[bytes, List]], Set] = await self.get(key)
         if not data or not isinstance(data, List):
-            data: Set = {value}
+            data = {value}
         else:
-            data: Set = set(data)
+            data = set(data)
             data.add(value)
         await self.set(key, list(data))
         return True
 
     async def srem(self, key: str, member: Any) -> bool:
-        data: Optional[Union[bytes, List]] = await self.get(key)
+        data: Union[Optional[Union[bytes, List]], Set] = await self.get(key)
         if not data or not isinstance(data, List):
             return False
-        data: Set = set(data)
+        data = set(data)
         if member not in data:
             return False
         data.remove(member)

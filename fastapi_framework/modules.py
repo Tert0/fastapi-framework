@@ -1,11 +1,11 @@
 from os import getenv
-from typing import List, Set
+from typing import List, Set, Dict
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-dependencies = {
+dependencies: Dict[str, List] = {
     "redis": [],
     "database": [],
     "logger": [],

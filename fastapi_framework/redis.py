@@ -1,6 +1,7 @@
 from typing import Set, Any, Optional
 
 from aioredis import create_redis_pool
+from aioredis import Redis as RedisConnection
 from dotenv import load_dotenv
 from os import getenv
 from .in_memory_backend import InMemoryBackend, RAMBackend
@@ -16,7 +17,7 @@ REDIS_PORT = getenv("REDIS_PORT", "6379")
 
 
 class RedisBackend(InMemoryBackend):
-    redis_connection: Redis
+    redis_connection: RedisConnection
 
     @staticmethod
     async def init(url: str) -> "RedisBackend":
