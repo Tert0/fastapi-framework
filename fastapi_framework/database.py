@@ -1,13 +1,11 @@
-from asyncio import new_event_loop
 from os import getenv
-from typing import TypeVar, Optional, Type, Union, Dict
+from typing import TypeVar, Dict
 
-from aioredis.util import get_event_loop
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession
 from sqlalchemy.future import select as sa_select
-from sqlalchemy.orm import DeclarativeMeta, declarative_base, selectinload, sessionmaker
+from sqlalchemy.orm import DeclarativeMeta, declarative_base, sessionmaker
 from sqlalchemy.pool import NullPool
 from sqlalchemy.sql import Executable
 from sqlalchemy.sql.expression import exists as sa_exists, delete as sa_delete, Delete
@@ -15,7 +13,6 @@ from sqlalchemy.sql.functions import count
 from sqlalchemy.sql.selectable import Select, Exists
 
 from .logger import get_logger
-from .modules import disabled_modules
 
 load_dotenv()
 

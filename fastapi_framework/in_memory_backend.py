@@ -45,6 +45,8 @@ class InMemoryBackend(ABC):
 
 
 class RAMBackendItem:
+    """Key-Value Item for the RAM Backend"""
+
     value: Union[bytes, List]
     pexpire: int
     timestamp: int
@@ -56,11 +58,14 @@ class RAMBackendItem:
 
 
 class RAMBackend(InMemoryBackend):
+    """Python In Memory Backend"""
+
     data: Dict[str, RAMBackendItem] = {}
     SET_IF_NOT_EXIST = "SET_IF_NOT_EXIST"  # NX
     SET_IF_EXIST = "SET_IF_EXIST"  # XX
 
     async def _check_key_expire(self, key: str, item: RAMBackendItem):
+        """Checks if a Key is expired and deletes it"""
         timestamp = int(time.time() * 1000)
         if item.pexpire > 0 and (item.timestamp + item.pexpire) <= timestamp:
             self.data.pop(key)
@@ -68,6 +73,7 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def set(self, key: str, value: Any, expire: int = 0, pexpire: int = 0, exists=None):
+        """Set Key to Value"""
         if not isinstance(value, bytes) and not isinstance(value, List):
             value = bytes(str(value), "utf-8")
         if exists == self.SET_IF_NOT_EXIST:
@@ -83,6 +89,7 @@ class RAMBackend(InMemoryBackend):
         self.data[key] = RAMBackendItem(value, pexpire + (expire * 1000))
 
     async def get(self, key: str):
+        """Get Value from Key"""
         item: Optional[RAMBackendItem] = self.data.get(key)
         if not item:
             return None
@@ -91,6 +98,7 @@ class RAMBackend(InMemoryBackend):
         return item.value
 
     async def pttl(self, key: str) -> int:
+        """Get PTTL from a Key"""
         item: Optional[RAMBackendItem] = self.data.get(key)
         timestamp = int(time.time() * 1000)
         if not item:
@@ -102,12 +110,14 @@ class RAMBackend(InMemoryBackend):
         return (item.pexpire + item.timestamp) - timestamp
 
     async def ttl(self, key: str) -> int:
+        """Get TTL from a Key"""
         pttl = await self.pttl(key)
         if pttl >= 0:
             return pttl // 1000
         return pttl
 
     async def pexpire(self, key: str, pexpire: int) -> bool:
+        """Sets and PTTL for a Key"""
         item: Optional[RAMBackendItem] = self.data.get(key)
         timestamp = int(time.time() * 1000)
         if not item:
@@ -120,9 +130,11 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def expire(self, key: str, expire: int) -> bool:
+        """Sets and TTL for a Key"""
         return await self.pexpire(key, expire * 1000)
 
     async def incr(self, key: str) -> int:
+        """Increases an Int Key"""
         item: Optional[RAMBackendItem] = self.data.get(key)
         if not item:
             await self.set(key, 1)
@@ -137,6 +149,7 @@ class RAMBackend(InMemoryBackend):
         return int(item.value.decode("utf-8"))
 
     async def decr(self, key: str) -> int:
+        """Decreases an Int Key"""
         item: Optional[RAMBackendItem] = self.data.get(key)
         if not item:
             await self.set(key, -1)
@@ -151,11 +164,13 @@ class RAMBackend(InMemoryBackend):
         return int(item.value.decode("utf-8"))
 
     async def delete(self, key: str):
+        """Delete value of a Key"""
         if key not in self.data:
             return
         del self.data[key]
 
     async def smembers(self, key: str) -> Set:
+        """Gets Set Members"""
         data: Optional[Union[bytes, List]] = await self.get(key)
         if not data:
             return set()
@@ -164,6 +179,7 @@ class RAMBackend(InMemoryBackend):
         return set(data)
 
     async def sadd(self, key: str, value: Any) -> bool:
+        """Adds a Member to a Dict"""
         data: Union[Optional[Union[bytes, List]], Set] = await self.get(key)
         if not data or not isinstance(data, List):
             data = {value}
@@ -174,6 +190,7 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def srem(self, key: str, member: Any) -> bool:
+        """Removes a Member from a Set"""
         data: Union[Optional[Union[bytes, List]], Set] = await self.get(key)
         if not data or not isinstance(data, List):
             return False
@@ -185,4 +202,5 @@ class RAMBackend(InMemoryBackend):
         return True
 
     async def exists(self, key: str) -> bool:
+        """Checks if a Key exists"""
         return key in self.data
