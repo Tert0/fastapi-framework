@@ -3,7 +3,7 @@ from os import getenv
 from typing import Dict
 
 import jwt
-from aioredis import Redis
+from .redis import Redis
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer
@@ -64,7 +64,7 @@ async def create_refresh_token(user_id: int, redis: Redis) -> str:
     """Creates an Refresh Token with the `user_id` and needs `redis`"""
     refresh_token_data: Dict = {"user_id": user_id}
     refresh_token: str = await create_jwt_token(refresh_token_data, timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES))
-    redis.sadd("refresh_tokens", refresh_token)
+    await redis.sadd("refresh_tokens", refresh_token)
     return refresh_token
 
 

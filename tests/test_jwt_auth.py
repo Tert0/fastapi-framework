@@ -120,7 +120,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_create_refresh_token(self):
         user_id: int = 5
-        redis = MagicMock()
+        redis = AsyncMock()
         jwt_token = await create_refresh_token(user_id, redis)
         redis.sadd.assert_called_once_with("refresh_tokens", jwt_token)
         decoded_data = jwt.decode(jwt_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
@@ -159,7 +159,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     async def test_generate_tokens(self):
         data = {"test": "test_value"}
         user_id = 6
-        redis = MagicMock()
+        redis = AsyncMock()
         tokens = await generate_tokens(data, user_id, redis)
         self.assertTrue("token_type" in tokens)
         self.assertEqual(tokens["token_type"], "bearer")
