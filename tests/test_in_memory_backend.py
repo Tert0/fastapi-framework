@@ -187,3 +187,15 @@ class TestInMemoryBackend(IsolatedAsyncioTestCase):
         await ram_backend.set("test_smembers_with_string", "test_value")
 
         self.assertEqual(await ram_backend.smembers("test_smembers_with_string"), {b"test_value"})
+
+    async def test_increase_with_list(self):
+        await ram_backend.set("test_increase_with_list", ["test"])
+
+        with self.assertRaises(Exception):
+            await ram_backend.incr("test_increase_with_list")
+
+    async def test_decrease_with_list(self):
+        await ram_backend.set("test_decrease_with_list", ["test"])
+
+        with self.assertRaises(Exception):
+            await ram_backend.decr("test_decrease_with_list")
