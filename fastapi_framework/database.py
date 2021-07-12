@@ -152,4 +152,5 @@ class DatabaseDependency:
         return self.db
 
 
-database_dependency = DatabaseDependency()
+database_dependency: DatabaseDependency = DatabaseDependency()
+Base: DeclarativeMeta = database_dependency.db.Base

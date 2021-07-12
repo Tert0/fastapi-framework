@@ -6,7 +6,16 @@ from unittest.mock import MagicMock, patch
 from fastapi import HTTPException, FastAPI, Depends
 from sqlalchemy import Column, String, Integer
 
-from fastapi_framework.database import select, filter_by, exists, delete, database_dependency, DB, DatabaseDependency
+from fastapi_framework.database import (
+    select,
+    filter_by,
+    exists,
+    delete,
+    database_dependency,
+    DB,
+    DatabaseDependency,
+    Base,
+)
 
 from httpx import AsyncClient, Response
 from random import choices
@@ -15,7 +24,7 @@ from string import ascii_letters
 app = FastAPI()
 
 
-class User(database_dependency.db.Base):
+class User(Base):
     __tablename__ = "users"
     id: Union[Column, int] = Column(Integer, primary_key=True)
     name: Union[Column, str] = Column(String(255))

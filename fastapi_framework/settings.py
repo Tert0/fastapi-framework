@@ -4,12 +4,12 @@ from typing import Union, Optional
 from sqlalchemy import Column, String
 
 from .redis import redis_dependency, Redis
-from .database import database_dependency, DB, select
+from .database import database_dependency, DB, select, Base
 
 CACHE_TTL = int(getenv("CACHE_TTL", str(60 * 60 * 5)))
 
 
-class SettingsModel(database_dependency.db.Base):
+class SettingsModel(Base):
     __tablename__ = "settings"
     key: Union[str, Column] = Column(String(255), primary_key=True, unique=True)
     value: Union[str, Column] = Column(String())
