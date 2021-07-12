@@ -22,8 +22,11 @@ class SettingsModel(Base):
 
 
 class Settings:
+    """Project Settings"""
+
     @staticmethod
     async def set(key: str, value: Union[str, int, float, bool]):
+        """Sets a Key to a Value and caches it"""
         redis: Redis = await redis_dependency()
         db: DB = await database_dependency()
         setting: SettingsModel
@@ -38,6 +41,7 @@ class Settings:
 
     @staticmethod
     async def get(key: str) -> Optional[str]:
+        """Gets a Value from a Key"""
         redis: Redis = await redis_dependency()
         redis_key = f"settings:{key}"
         value: bytes
