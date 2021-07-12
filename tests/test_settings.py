@@ -28,9 +28,13 @@ class TestSettings(IsolatedAsyncioTestCase):
         await Settings.set("test_settings_set_with_bool", True)
         await Settings.set("test_settings_set_with_bool_false", False)
 
-        self.assertEqual((await db.first(select(SettingsModel).filter_by(key="test_settings_set_with_bool"))).value, "1")
+        self.assertEqual(
+            (await db.first(select(SettingsModel).filter_by(key="test_settings_set_with_bool"))).value, "1"
+        )
         self.assertEqual(await redis.get("settings:test_settings_set_with_bool"), b"1")
-        self.assertEqual((await db.first(select(SettingsModel).filter_by(key="test_settings_set_with_bool_false"))).value, "0")
+        self.assertEqual(
+            (await db.first(select(SettingsModel).filter_by(key="test_settings_set_with_bool_false"))).value, "0"
+        )
         self.assertEqual(await redis.get("settings:test_settings_set_with_bool_false"), b"0")
 
     async def test_settings_change_value(self):
