@@ -17,6 +17,7 @@ class TestSettings(IsolatedAsyncioTestCase):
 
     async def test_settings_get(self):
         await Settings.set("test_settings_get", "test_value")
+
         result = await Settings.get("test_settings_get")
 
         self.assertEqual(result, "test_value")

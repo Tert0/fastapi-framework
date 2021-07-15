@@ -86,7 +86,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_create_jwt_token(self):
         data = {"test": "test_value"}
+
         jwt_token = await create_jwt_token(data, timedelta(minutes=30))
+
         self.assertIsInstance(jwt_token, str)
         decoded_data = jwt.decode(jwt_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
         self.assertTrue("test" in decoded_data)
@@ -97,7 +99,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_get_data(self):
         data = {"test": "test_value"}
+
         jwt_token = jwt.encode(data, "TEST_SECRET_KEY", algorithm=ALGORITHM)
+
         decoded_data = await get_data(jwt_token)
         self.assertIsInstance(decoded_data, Dict)
         self.assertEqual(decoded_data, data)
@@ -105,14 +109,18 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_get_data_invalid_token(self):
         data = {"exp": datetime.utcnow() - timedelta(minutes=10)}
+
         jwt_token = jwt.encode(data, "TEST_SECRET_KEY", algorithm=ALGORITHM)
+
         with self.assertRaises(HTTPException):
             await get_data(jwt_token)
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_create_access_token(self):
         data = {"test": "test_value"}
+
         jwt_token = await create_access_token(data)
+
         decoded_data = jwt.decode(jwt_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
         self.assertTrue("test" in decoded_data)
         self.assertEqual(decoded_data["test"], data["test"])
@@ -121,7 +129,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     async def test_create_refresh_token(self):
         user_id: int = 5
         redis = AsyncMock()
+
         jwt_token = await create_refresh_token(user_id, redis)
+
         redis.sadd.assert_called_once_with("refresh_tokens", jwt_token)
         decoded_data = jwt.decode(jwt_token, "TEST_SECRET_KEY", algorithms=[ALGORITHM])
         self.assertTrue("user_id" in decoded_data)
@@ -129,7 +139,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
 
     async def test_invalidate_refresh_token(self):
         redis = AsyncMock()
+
         await invalidate_refresh_token("TEST_REFRESH_TOKEN", redis)
+
         redis.srem.assert_called_once_with("refresh_tokens", "TEST_REFRESH_TOKEN")
 
     async def test_check_refresh_token_positive(self):
@@ -140,7 +152,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
             b"TEST_SECOND_FALSE_REFRESH_TOKEN",
             b"TEST_REFRESH_TOKEN",
         ]
+
         result = await check_refresh_token("TEST_REFRESH_TOKEN", redis)
+
         redis.smembers.assert_called_once_with("refresh_tokens")
         self.assertTrue(result)
 
@@ -151,7 +165,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
             b"TEST_FALSE_REFRESH_TOKEN",
             b"TEST_SECOND_FALSE_REFRESH_TOKEN",
         ]
+
         result = await check_refresh_token("TEST_REFRESH_TOKEN", redis)
+
         redis.smembers.assert_called_once_with("refresh_tokens")
         self.assertFalse(result)
 
@@ -160,7 +176,9 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         data = {"test": "test_value"}
         user_id = 6
         redis = AsyncMock()
+
         tokens = await generate_tokens(data, user_id, redis)
+
         self.assertTrue("token_type" in tokens)
         self.assertEqual(tokens["token_type"], "bearer")
         self.assertTrue("access_token" in tokens)
@@ -179,6 +197,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     async def test_login(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
+
         self.assertEqual(response.status_code, 200)
         self.assertTrue("access_token" in response.json())
         self.assertTrue("refresh_token" in response.json())
@@ -189,19 +208,23 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     async def test_login_invalid_credentials(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "not_exists", "password": "wrong"})
+
         self.assertEqual(response.status_code, 401)
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_secret_route(self):
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
+
         self.assertEqual(response.status_code, 200)
         self.assertTrue("access_token" in response.json())
         self.assertTrue("token_type" in response.json())
         self.assertEqual(response.json()["token_type"], "bearer")
         access_token = response.json()["access_token"]
+
         async with AsyncClient(app=app, base_url="https://test") as ac:
             response: Response = await ac.get("/secret", headers={"Authorization": f"Bearer {access_token}"})
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode("utf-8"), '"Hello!"')
 
