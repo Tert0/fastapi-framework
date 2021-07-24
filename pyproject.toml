@@ -7,7 +7,7 @@ dist-name = "fastapi-framework"
 module = "fastapi_framework"
 author = "Tert0"
 home-page = "https://github.com/Tert0/fastapi-framework"
-classifiers = [ "License :: OSI Approved :: MIT License",]
+classifiers = [ "License :: OSI Approved :: MIT License", "Framework :: AsyncIOFramework :: AsyncIO", "Intended Audience :: Developers", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: Implementation :: CPython", "Topic :: Database", "Topic :: Software Development :: Libraries", "Topic :: Software Development :: Libraries :: Python Modules", "Typing :: Typed"]
 description-file = "README.md"
 requires = [
     "fastapi==0.67.0",
