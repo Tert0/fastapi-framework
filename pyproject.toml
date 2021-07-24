@@ -10,12 +10,12 @@ home-page = "https://github.com/Tert0/fastapi-framework"
 classifiers = [ "License :: OSI Approved :: MIT License",]
 description-file = "README.md"
 requires = [
-    "fastapi==0.65.2",
+    "fastapi==0.67.0",
     "aioredis==1.3.1",
     "passlib==1.7.4",
     "PyJWT==2.1.0",
     "python-dotenv==0.18.0",
-    "SQLAlchemy==1.4.20",
+    "SQLAlchemy==1.4.22",
     "uvicorn==0.14.0"
 ]
 
