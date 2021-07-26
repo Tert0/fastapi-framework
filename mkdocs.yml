@@ -36,9 +36,14 @@ nav:
       - database/query.md
       - database/insert_delete_modify.md
       - database/example.md
-  - Redis:
-      - redis/index.md
-      - redis/connection.md
+  - In Memory Backends:
+      - Redis:
+          - in_memory_backends/redis/index.md
+          - in_memory_backends/redis/connection.md
+      - In Memory Backend:
+        - in_memory_backends/in_memory_backend/index.md
+      - API:
+          - in_memory_backends/api/index.md
   - JWT:
       - jwt/index.md
       - jwt/jwt_tokens.md
