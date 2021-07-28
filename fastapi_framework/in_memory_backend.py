@@ -35,7 +35,7 @@ class InMemoryBackend(ABC):
         """Gets Set Members"""
 
     async def sadd(self, key: str, value: Any) -> bool:
-        """Adds a Member to a Dict"""
+        """Adds a Member to a Set"""
 
     async def srem(self, key: str, member: Any) -> bool:
         """Removes a Member from a Set"""
@@ -179,7 +179,7 @@ class RAMBackend(InMemoryBackend):
         return set(data)
 
     async def sadd(self, key: str, value: Any) -> bool:
-        """Adds a Member to a Dict"""
+        """Adds a Member to a Set"""
         data: Union[Optional[Union[bytes, List]], Set] = await self.get(key)
         if not data or not isinstance(data, List):
             data = {value}
