@@ -13,21 +13,21 @@
         <meta name="author" content="https://github.com/Tert0/">
       
       
-        <link rel="canonical" href="https://tert0.github.io/fastapi-framework/database/query/">
+        <link rel="canonical" href="https://tert0.github.io/fastapi-framework/in_memory_backends/api/set_get/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.1">
     
     
       
-        <title>Query - Fastapi Framework Documentation</title>
+        <title>Set and Get - Fastapi Framework Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.1118c9be.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1118c9be.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ba0d045b.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ba0d045b.min.css">
         
       
     
@@ -61,7 +61,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#query" class="md-skip">
+        <a href="#set-and-get" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../../.." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Query
+              Set and Get
             
           </span>
         </div>
@@ -201,7 +201,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../../.." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -233,7 +233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         FastAPI Framework
       </a>
     </li>
@@ -248,7 +248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../environment/" class="md-nav__link">
+      <a href="../../../environment/" class="md-nav__link">
         Environment
       </a>
     </li>
@@ -261,14 +261,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         Database
@@ -286,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../database/" class="md-nav__link">
         Database
       </a>
     </li>
@@ -298,7 +296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/" class="md-nav__link">
+      <a href="../../../database/models/" class="md-nav__link">
         Models
       </a>
     </li>
@@ -308,99 +306,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Query
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../database/query/" class="md-nav__link">
         Query
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#select" class="md-nav__link">
-    Select
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#filter-by" class="md-nav__link">
-    Filter By
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#execute-querys" class="md-nav__link">
-    Execute Querys
-  </a>
-  
-    <nav class="md-nav" aria-label="Execute Querys">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-first-element" class="md-nav__link">
-    Get First Element
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-all-element" class="md-nav__link">
-    Get All Element
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-exists" class="md-nav__link">
-    Check Exists
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#count-results" class="md-nav__link">
-    Count Results
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -410,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../insert_delete_modify/" class="md-nav__link">
+      <a href="../../../database/insert_delete_modify/" class="md-nav__link">
         Insert, Delete and Modify Data
       </a>
     </li>
@@ -422,7 +332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../example/" class="md-nav__link">
+      <a href="../../../database/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -441,12 +351,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       <label class="md-nav__link" for="__nav_4">
         In Memory Backends
@@ -485,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/redis/" class="md-nav__link">
+      <a href="../../redis/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -497,7 +409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/redis/connection/" class="md-nav__link">
+      <a href="../../redis/connection/" class="md-nav__link">
         Redis Connection
       </a>
     </li>
@@ -536,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/in_memory_backend/" class="md-nav__link">
+      <a href="../../in_memory_backend/" class="md-nav__link">
         In Memory Backend
       </a>
     </li>
@@ -552,12 +464,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
       
       <label class="md-nav__link" for="__nav_4_3">
         API
@@ -575,7 +489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -585,11 +499,21 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/set_get/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Set and Get
       </a>
+      
     </li>
   
 
@@ -599,7 +523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/expires/" class="md-nav__link">
+      <a href="../expires/" class="md-nav__link">
         Expires
       </a>
     </li>
@@ -611,7 +535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/increase_decrease/" class="md-nav__link">
+      <a href="../increase_decrease/" class="md-nav__link">
         Increase and Decrease
       </a>
     </li>
@@ -623,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/delete_exists/" class="md-nav__link">
+      <a href="../delete_exists/" class="md-nav__link">
         Delete and Exists
       </a>
     </li>
@@ -635,7 +559,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../in_memory_backends/api/sets/" class="md-nav__link">
+      <a href="../sets/" class="md-nav__link">
         Sets
       </a>
     </li>
@@ -683,7 +607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../jwt/" class="md-nav__link">
+      <a href="../../../jwt/" class="md-nav__link">
         JWT
       </a>
     </li>
@@ -695,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../jwt/jwt_tokens/" class="md-nav__link">
+      <a href="../../../jwt/jwt_tokens/" class="md-nav__link">
         JWT Tokens
       </a>
     </li>
@@ -707,7 +631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../jwt/example/" class="md-nav__link">
+      <a href="../../../jwt/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -749,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rate_limit/" class="md-nav__link">
+      <a href="../../../rate_limit/" class="md-nav__link">
         Rate Limit
       </a>
     </li>
@@ -761,7 +685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rate_limit/rate_limit_manager/" class="md-nav__link">
+      <a href="../../../rate_limit/rate_limit_manager/" class="md-nav__link">
         Rate Limit Manager
       </a>
     </li>
@@ -773,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rate_limit/example/" class="md-nav__link">
+      <a href="../../../rate_limit/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -805,69 +729,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#select" class="md-nav__link">
-    Select
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#filter-by" class="md-nav__link">
-    Filter By
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#execute-querys" class="md-nav__link">
-    Execute Querys
-  </a>
-  
-    <nav class="md-nav" aria-label="Execute Querys">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-first-element" class="md-nav__link">
-    Get First Element
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-all-element" class="md-nav__link">
-    Get All Element
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check-exists" class="md-nav__link">
-    Check Exists
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#count-results" class="md-nav__link">
-    Count Results
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -878,89 +739,30 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Tert0/fastapi-framework/edit/master/docs/database/query.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Tert0/fastapi-framework/edit/master/docs/in_memory_backends/api/set_get.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="query">Query</h1>
-<p>Function for Database Query are 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">filter_by</span>
-</code></pre></div></p>
-<h2 id="select">Select</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span> <span class="c1"># Selects all from the MyModel table</span>
+                <h1 id="set-and-get">Set and Get</h1>
+<p>You can set Values with
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">redis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;my_key&quot;</span><span class="p">,</span> <span class="s2">&quot;a value&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="filter-by">Filter By</h2>
-<p><code>filter_by(Model, criteria)</code> is a shortcut for <code>select(Model).filer_by(criteria)</code></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">filter_by</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">filter_by</span><span class="p">(</span><span class="n">MyModel</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Selects all from the MyModel table where id is 1</span>
-    <span class="c1"># Same here:</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+and get them with
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;my_key&quot;</span><span class="p">))</span>
+<span class="c1">#  a value</span>
 </code></pre></div>
-<h2 id="execute-querys">Execute Querys</h2>
-<h3 id="get-first-element">Get First Element</h3>
-<p>Returns the first Result for the Query.
-Could be <code>None</code></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span> <span class="c1"># Your Query</span>
-    <span class="n">result</span><span class="p">:</span> <span class="n">MyModel</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<code>GET</code> will return <code>None</code> if the key doesn't exist or is expired.</p>
+<p>The <code>SET</code> Command has some other Arguments
+<div class="highlight"><pre><span></span><code><span class="n">expire_seconds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">expire_milliseconds</span> <span class="o">=</span> <span class="mi">555</span>
+<span class="k">await</span> <span class="n">redis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;my_key&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;a value&quot;</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="n">expire_seconds</span><span class="p">,</span> <span class="n">pexpire</span><span class="o">=</span><span class="n">expire_milliseconds</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="n">RAMBackend</span><span class="o">.</span><span class="n">SET_IF_EXIST</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="get-all-element">Get All Element</h3>
-<p>Returns all results for the query.
-Could be <code>[]</code>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span> <span class="c1"># Your Query</span>
-    <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MyModel</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-</code></pre></div></p>
-<h3 id="check-exists">Check Exists</h3>
-<p>Checks if data for this query exists</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span> <span class="c1"># Your Query</span>
-    <span class="n">exists</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="count-results">Count Results</h3>
-<p>Returns count of matching rows for the query</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework.database</span> <span class="kn">import</span> <span class="n">db</span><span class="p">,</span> <span class="n">select</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Base</span><span class="p">):</span>
-    <span class="c1"># The Model Code</span>
-    <span class="k">pass</span>
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span> <span class="c1"># Your Query</span>
-    <span class="n">count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-</code></pre></div>
+- key: The Redis Key
+- value: The Value
+- expire: The Expire time in Seconds
+- pexpire: The Expire time in Milliseconds
+- exists: Exist Conditions</p>
                 
               
               
@@ -980,7 +782,7 @@ Could be <code>[]</code>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../models/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Models" rel="prev">
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -989,20 +791,20 @@ Could be <code>[]</code>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Models
+              Introduction
             </div>
           </div>
         </a>
       
       
         
-        <a href="../insert_delete_modify/" class="md-footer__link md-footer__link--next" aria-label="Next: Insert, Delete and Modify Data" rel="next">
+        <a href="../expires/" class="md-footer__link md-footer__link--next" aria-label="Next: Expires" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Insert, Delete and Modify Data
+              Expires
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1044,10 +846,10 @@ Could be <code>[]</code>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.53c85856.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.53c85856.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.716f8af4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.716f8af4.min.js"></script>
       
     
   </body>
