@@ -44,6 +44,11 @@ nav:
         - in_memory_backends/in_memory_backend/index.md
       - API:
           - in_memory_backends/api/index.md
+          - in_memory_backends/api/set_get.md
+          - in_memory_backends/api/expires.md
+          - in_memory_backends/api/increase_decrease.md
+          - in_memory_backends/api/delete_exists.md
+          - in_memory_backends/api/sets.md
   - JWT:
       - jwt/index.md
       - jwt/jwt_tokens.md
