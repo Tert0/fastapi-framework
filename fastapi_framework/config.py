@@ -31,12 +31,15 @@ class ConfigMeta(type):
 
         if config_type.lower() == "yaml":
             import yaml
+
             config = yaml.load(data, Loader=yaml.CLoader)
         elif config_type.lower() == "json":
             import json
+
             config = json.loads(data)
         elif config_type.lower() == "toml":
             import toml
+
             config = toml.loads(data)
         else:
             raise Exception(f"Config Type '{config_type}' is not Supported")

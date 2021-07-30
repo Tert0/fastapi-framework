@@ -12,7 +12,7 @@ dependencies: Dict[str, List] = {
     "jwt_auth": [],
     "rate_limit": [],
     "settings": ["database"],
-    "config": []
+    "config": [],
 }
 disabled_modules: List[str] = list(
     map(str.lower, getenv("DISABLED_MODULES", "").replace(" ", "").replace(",", ";").split(";"))
