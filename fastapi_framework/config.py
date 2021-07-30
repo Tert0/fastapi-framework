@@ -11,15 +11,17 @@ class ConfigMeta(type):
     def __new__(mcs, name, bases, dct):
         config_entries: Dict[str, Any] = {}
         config_class = super().__new__(mcs, name, bases, dct)
-        if "config" in disabled_modules:
-            return config_class
         annotations: Dict = dct.get("__annotations__", {})
 
         for annotation in annotations.keys():
             if annotation in CONFIG_BLOCKLIST:
                 continue
-            value = dct.get(annotation)
-            config_entries[annotation] = (value, annotations.get(annotation))
+            config_entries[annotation] = (dct.get(annotation), annotations.get(annotation))
+
+        if "config" in disabled_modules:
+            for config_entry in config_entries:
+                setattr(config_class, config_entry, None)
+            return config_class
 
         config_file_path = dct.get("CONFIG_PATH") or CONFIG_FILE_PATH_DEFAULT
         config_type = dct.get("CONFIG_TYPE") or CONFIG_TYPE_DEFAULT
@@ -47,8 +49,6 @@ class ConfigMeta(type):
         del data
 
         config = config or {}
-        print(config)
-        print(config_entries)
         for key in config_entries.keys():
             if key in config.keys():
                 entry_type = config_entries.get(key)[1]
