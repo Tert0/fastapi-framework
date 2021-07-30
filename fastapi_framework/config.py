@@ -1,5 +1,7 @@
 from typing import Dict, Any
 
+from fastapi_framework import disabled_modules
+
 CONFIG_BLOCKLIST = ["CONFIG_PATH", "CONFIG_TYPE"]
 CONFIG_FILE_PATH_DEFAULT = "config.yaml"
 CONFIG_TYPE_DEFAULT = "yaml"
@@ -9,6 +11,8 @@ class ConfigMeta(type):
     def __new__(mcs, name, bases, dct):
         config_entries: Dict[str, Any] = {}
         config_class = super().__new__(mcs, name, bases, dct)
+        if "config" in disabled_modules:
+            return config_class
         annotations: Dict = dct.get("__annotations__", {})
 
         for annotation in annotations.keys():
@@ -40,13 +44,18 @@ class ConfigMeta(type):
         del data
 
         config = config or {}
-
-        for key in config.keys():
-            if key in config_entries.keys():
+        print(config)
+        print(config_entries)
+        for key in config_entries.keys():
+            if key in config.keys():
                 entry_type = config_entries.get(key)[1]
                 if entry_type.__module__ == "typing":
                     entry_type = entry_type.__origin__
-                setattr(config_class, key, entry_type(config[key]))
+                value = entry_type(config[key]) if config[key] is not None else None
+                setattr(config_class, key, value)
+            else:
+                value = config_entries.get(key)[0]
+                setattr(config_class, key, value)
 
         return config_class
 
