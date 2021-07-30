@@ -57,6 +57,8 @@ nav:
       - rate_limit/index.md
       - rate_limit/rate_limit_manager.md
       - rate_limit/example.md
+  - Config:
+      - config/index.md
 
 markdown_extensions:
   - pymdownx.highlight
