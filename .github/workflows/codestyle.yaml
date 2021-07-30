@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install --upgrade pip
-          pip install black mypy flake8
+          pip install black mypy flake8 types-pyyaml types-toml
       - name: Check code formatting with black
         run: black -l 120 . --diff --check
       - name: Check code with flake8
