@@ -28,6 +28,7 @@ For the Documentation click [here](https://tert0.github.io/fastapi-framework)
 - ✅ FastAPI JWT
 - ❌ FastAPI Permission System (for routes)
 - ✅ Rate Limits
+- ✅ Config Parser
 
 
 # License
