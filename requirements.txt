@@ -1,4 +1,4 @@
-fastapi==0.67.0
+fastapi==0.68.0
 aioredis==2.0.0
 passlib==1.7.4
 PyJWT==2.1.0
