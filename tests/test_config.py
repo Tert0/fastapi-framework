@@ -5,8 +5,8 @@ from fastapi_framework.config import Config
 
 class TestConfig(TestCase):
     test_yaml_config_data = "some_data: a value"
-    test_json_config_data = "{\"some_data\": \"a value\"}"
-    test_toml_config_data = "some_data = \"a value\""
+    test_json_config_data = '{"some_data": "a value"}'
+    test_toml_config_data = 'some_data = "a value"'
     test_yaml_config_with_typing_data = "items:\n  - an item\n  - an other item"
 
     @patch("builtins.open", mock_open(read_data=test_yaml_config_data))
@@ -57,6 +57,7 @@ class TestConfig(TestCase):
     @patch("builtins.open", mock_open(read_data=test_yaml_config_data))
     def test_config_type_dont_exists(self):
         with self.assertRaises(Exception):
+
             class MyConfig(Config):
                 CONFIG_TYPE = "type doesn't exists"
 
