@@ -832,13 +832,13 @@
                 <h1 id="config">Config</h1>
 <p>The <code>Config</code> Module is a simple "Config Parser".</p>
 <h2 id="example">Example</h2>
-<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">Config</span>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">ConfigField</span>
 
 
 <span class="k">class</span> <span class="nc">MyConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
-    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ConfigField</span><span class="p">()</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ConfigField</span><span class="p">(</span><span class="s2">&quot;v1.0&quot;</span><span class="p">)</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ConfigField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;_timestamp&quot;</span><span class="p">)</span>
 
 
 <span class="nb">print</span><span class="p">(</span><span class="n">MyConfig</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -847,7 +847,7 @@
 </code></pre></div>
 Content of <code>config.yaml</code>:
 <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">My cool Name</span>
-<span class="nt">timestamp</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">123456789</span>
+<span class="nt">_timestamp</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">123456789</span>
 </code></pre></div>
 Result:
 <div class="highlight"><pre><span></span><code>My cool Name
@@ -855,15 +855,20 @@ v1
 123456789
 </code></pre></div>
 As you can see if the <code>version</code> Config isn't set it will have the default value!</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>All Config Items must have a type hint!</p>
+<p>You can use another Key for the Config as the Variables name by setting <code>name</code>
+ to the Name</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Config Fields can have a Type Hint and will get converted to this type</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can define <code>CONFIG_PATH</code> to set the Path of the File</p>
 </div>
-<p>With <code>CONFIG_TYPE</code> you can set the File Type e.g. <code>yaml</code>, <code>json</code> and <code>toml</code></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can define <code>CONFIG_TYPE</code> to set the File Type e.g. <code>yaml</code>, <code>json</code> and <code>toml</code></p>
+</div>
                 
               
               
