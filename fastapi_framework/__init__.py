@@ -23,4 +23,4 @@ from .logger import get_logger
 from .rate_limit import RateLimitManager, RateLimiter, get_uuid_user_id, RateLimitTime
 from .redis import get_redis, RedisDependency, redis_dependency, Redis
 from .in_memory_backend import InMemoryBackend, RAMBackend
-from .config import Config
+from .config import Config, ConfigField

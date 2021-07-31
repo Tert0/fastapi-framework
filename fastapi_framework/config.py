@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from fastapi_framework import disabled_modules
 
@@ -7,16 +7,45 @@ CONFIG_FILE_PATH_DEFAULT = "config.yaml"
 CONFIG_TYPE_DEFAULT = "yaml"
 
 
+class _ConfigField:
+    name: str
+    type_hint: Optional[type] = None
+    default_value: Any
+
+    def __init__(self, name: str = "", default_value: Any = None):
+        self.name = name
+        self.default_value = default_value
+
+
+def ConfigField(name: str = "", default: Any = None) -> Any:
+    return _ConfigField(name, default)
+
+
 class ConfigMeta(type):
     def __new__(mcs, name, bases, dct):
-        config_entries: Dict[str, Any] = {}
+        config_entries: Dict[str, _ConfigField] = {}
         config_class = super().__new__(mcs, name, bases, dct)
-        annotations: Dict = dct.get("__annotations__", {})
+        annotations: Dict[str, type] = dct.get("__annotations__", {})
 
-        for annotation in annotations.keys():
-            if annotation in CONFIG_BLOCKLIST:
+        for key in dct.keys():
+            if key in CONFIG_BLOCKLIST:
                 continue
-            config_entries[annotation] = (dct.get(annotation), annotations.get(annotation))
+            if not isinstance(dct[key], _ConfigField):
+                continue
+            type_hint: Optional[type] = None
+            if key in annotations:
+                type_hint = annotations[key]
+            value: _ConfigField = dct[key]
+            type_hint = type_hint if not getattr(type_hint, "__origin__", None) else type_hint.__origin__
+            if type_hint is not None:
+                try:
+                    type_hint.__call__()
+                except TypeError:
+                    type_hint = None
+            value.type_hint = type_hint
+            if value.name == "":
+                value.name = key
+            config_entries[key] = value
 
         if "config" in disabled_modules:
             for config_entry in config_entries:
@@ -42,7 +71,7 @@ class ConfigMeta(type):
         elif config_type.lower() == "toml":
             import toml
 
-            config = toml.loads(data)
+            config = dict(toml.loads(data))
         else:
             raise Exception(f"Config Type '{config_type}' is not Supported")
 
@@ -50,14 +79,16 @@ class ConfigMeta(type):
 
         config = config or {}
         for key in config_entries.keys():
-            if key in config.keys():
-                entry_type = config_entries.get(key)[1]
-                if entry_type.__module__ == "typing":
-                    entry_type = entry_type.__origin__
-                value = entry_type(config[key]) if config[key] is not None else None
+            config_key = config_entries[key].name
+            if config_key in config.keys():
+                type_hint = config_entries.get(key).type_hint
+                if type_hint:
+                    value = type_hint(config[config_key]) if config[config_key] is not None else None
+                else:
+                    value = config[config_key]
                 setattr(config_class, key, value)
             else:
-                value = config_entries.get(key)[0]
+                value = config_entries.get(config_key).default_value
                 setattr(config_class, key, value)
 
         return config_class
