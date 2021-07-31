@@ -9,6 +9,7 @@ class TestConfig(TestCase):
     test_json_config_data = '{"some_data": "a value"}'
     test_toml_config_data = 'some_data = "a value"'
     test_yaml_config_with_typing_data = "items:\n  - an item\n  - an other item"
+    test_yaml_config_with_middlewares_data = "some_data: \"hEllo WOrLd\""
 
     @patch("builtins.open", mock_open(read_data=test_yaml_config_data))
     def test_yaml_config(self):
@@ -58,7 +59,6 @@ class TestConfig(TestCase):
     @patch("builtins.open", mock_open(read_data=test_yaml_config_data))
     def test_config_type_dont_exists(self):
         with self.assertRaises(Exception):
-
             class _(Config):
                 CONFIG_TYPE = "type doesn't exists"
 
@@ -88,3 +88,15 @@ class TestConfig(TestCase):
 
         self.assertEqual(MyConfig.some_data, None)
         self.assertEqual(MyConfig.some_other_data, None)
+
+    @patch("builtins.open", mock_open(read_data=test_yaml_config_with_middlewares_data))
+    def test_yaml_config_with_middlewares(self):
+        def my_middleware(data: Any) -> Any:
+            if not isinstance(data, str):
+                return data
+            return data.title()
+
+        class MyConfig(Config):
+            some_data: Any = ConfigField("some_data", middlewares=[my_middleware])
+
+        self.assertEqual(MyConfig.some_data, "Hello World")
