@@ -8,12 +8,13 @@ CONFIG_TYPE_DEFAULT = "yaml"
 
 
 def default_middleware(data: Any) -> Any:
-    """"The Default Middleware that only returns the value"""
+    """ "The Default Middleware that only returns the value"""
     return data
 
 
 class _ConfigField:
     """Internal class for ConfigFields"""
+
     name: str
     type_hint: Optional[type] = None
     default_value: Any
@@ -34,6 +35,7 @@ def ConfigField(default: Any = None, name: str = "", middlewares: Optional[List[
 
 class ConfigMeta(type):
     """Meta class for Config Representation Class"""
+
     def __new__(mcs, name, bases, dct):
         config_entries: Dict[str, _ConfigField] = {}
         config_class = super().__new__(mcs, name, bases, dct)
