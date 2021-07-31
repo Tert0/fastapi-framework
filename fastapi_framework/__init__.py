@@ -1,6 +1,6 @@
 """A FastAPI Framework for things like Database, Redis, Logging, JWT Authentication and Rate Limits"""
 
-__version__ = "1.4"
+__version__ = "1.4.6"
 
 from .modules import check_dependencies, disabled_modules
 
