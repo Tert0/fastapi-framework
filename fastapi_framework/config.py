@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, Callable, List, Coroutine
+from typing import Dict, Any, Optional, Callable, List
 
 from fastapi_framework import disabled_modules
 
@@ -8,10 +8,12 @@ CONFIG_TYPE_DEFAULT = "yaml"
 
 
 def default_middleware(data: Any) -> Any:
+    """"The Default Middleware that only returns the value"""
     return data
 
 
 class _ConfigField:
+    """Internal class for ConfigFields"""
     name: str
     type_hint: Optional[type] = None
     default_value: Any
@@ -26,10 +28,12 @@ class _ConfigField:
 
 
 def ConfigField(default: Any = None, name: str = "", middlewares: Optional[List[Callable]] = None) -> Any:
+    """Public Wrapper for _ConfigField"""
     return _ConfigField(default, name, middlewares)
 
 
 class ConfigMeta(type):
+    """Meta class for Config Representation Class"""
     def __new__(mcs, name, bases, dct):
         config_entries: Dict[str, _ConfigField] = {}
         config_class = super().__new__(mcs, name, bases, dct)
@@ -94,7 +98,6 @@ class ConfigMeta(type):
                     value = type_hint(config[config_key]) if config[config_key] is not None else None
                 else:
                     value = config[config_key]
-                print("ttt", config[config_key])
                 for middleware in config_entries[key].middlewares:
                     value = middleware(value)
                 setattr(config_class, key, value)
