@@ -12,13 +12,13 @@ class _ConfigField:
     type_hint: Optional[type] = None
     default_value: Any
 
-    def __init__(self, name: str = "", default_value: Any = None):
+    def __init__(self, default_value: Any = None, name: str = ""):
         self.name = name
         self.default_value = default_value
 
 
-def ConfigField(name: str = "", default: Any = None) -> Any:
-    return _ConfigField(name, default)
+def ConfigField(default: Any = None, name: str = "") -> Any:
+    return _ConfigField(default, name)
 
 
 class ConfigMeta(type):
