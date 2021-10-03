@@ -13,9 +13,7 @@ class MyConfig(Config):
     timestamp: int = ConfigField(name="_timestamp")
 
 
-print(MyConfig.name)
-print(MyConfig.version)
-print(MyConfig.timestamp)
+print(f"{MyConfig.name}\n{MyConfig.version}\n{MyConfig.timestamp}")
 ```
 Content of `config.yaml`:
 ```yaml
