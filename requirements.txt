@@ -5,5 +5,5 @@ PyJWT==2.2.0
 python-dotenv==0.19.1
 SQLAlchemy==1.4.25
 uvicorn==0.15.0
-pyyaml==5.4.1
+pyyaml==6.0
 toml==0.10.2
