@@ -136,9 +136,9 @@ class TestSession(IsolatedAsyncioTestCase):
         self.assertEqual(exists, False)
 
     @patch("fastapi_framework.session.redis_dependency", new_callable=AsyncMock)
-    async def test_create_session(self, redis_dependency: AsyncMock):
+    async def test_create_session(self, redis_dependency_mock: AsyncMock):
         ram_backend = RAMBackend()
-        redis_dependency.return_value = ram_backend
+        redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
         session.generate_session_id_callback = MagicMock()
