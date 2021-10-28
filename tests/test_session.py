@@ -5,9 +5,14 @@ from unittest.mock import patch, MagicMock, AsyncMock
 from pydantic import BaseModel
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from fastapi_framework import session as session_module, redis_dependency, RAMBackend
-from fastapi_framework.session import fetch_session_id, generate_session_id, session_middleware, Session, \
-    SessionNotExists
+from fastapi_framework import RAMBackend
+from fastapi_framework.session import (
+    fetch_session_id,
+    generate_session_id,
+    session_middleware,
+    Session,
+    SessionNotExists,
+)
 
 
 class TestSession(IsolatedAsyncioTestCase):
