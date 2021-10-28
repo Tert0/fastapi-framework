@@ -1,4 +1,3 @@
-import asyncio
 import random
 import string
 from typing import Union, Callable, Coroutine, Type, Optional
@@ -21,6 +20,23 @@ async def generate_session_id() -> str:
     return "".join(random.choices(string.ascii_letters + string.digits, k=100))
 
 
+async def session_middleware(
+    session_system: "Session", request: Request, call_next: RequestResponseEndpoint
+) -> Response:
+    session_id: Optional[str] = None
+    await session_system.fetch_session_id(request)
+    if not await session_system.session_exists(request):
+        session_id = await session_system.create_session()
+
+        request.state.session_id = session_id
+
+    response: Response = await call_next(request)
+
+    if session_id:
+        response = await session_system.add_session_id(response, session_id)
+    return response
+
+
 class SessionNotExists(Exception):
     pass
 
@@ -38,8 +54,12 @@ class Session:
         default_data: BaseModel,
         session_id_callback: Union[Callable[[Request], None], Callable[[Request], Coroutine]] = fetch_session_id,
         generate_session_id_callback: Union[Callable[[], str], Callable[[], Coroutine]] = generate_session_id,
+        middleware: Union[
+            Callable[["Session", Request, RequestResponseEndpoint], Response],
+            Callable[["Session", Request, RequestResponseEndpoint], Coroutine],
+        ] = session_middleware,
     ) -> None:
-        app.add_middleware(BaseHTTPMiddleware, dispatch=self._middleware)
+        app.add_middleware(BaseHTTPMiddleware, dispatch=middleware)
         self.model = model
         self.default_data = default_data
         self.session_id_callback = session_id_callback
@@ -76,17 +96,3 @@ class Session:
             raise SessionNotExists()
         data: BaseModel = self.model.parse_raw(raw_data)
         return data
-
-    async def _middleware(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
-        session_id: Optional[str] = None
-        await self.fetch_session_id(request)
-        if not await self.session_exists(request):
-            session_id = await self.create_session()
-
-            request.state.session_id = session_id
-
-        response: Response = await call_next(request)
-
-        if session_id:
-            response = await self.add_session_id(response, session_id)
-        return response
