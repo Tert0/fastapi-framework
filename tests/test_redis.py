@@ -25,11 +25,21 @@ class TestRedis(IsolatedAsyncioTestCase):
 
         self.assertIsInstance(redis_dependency.redis, RAMBackend)
 
+    @patch.object(redis, "disabled_modules", [])
     async def test_redis_dependency_call(self):
         redis_dependency: RedisDependency = RedisDependency()
         redis_dependency.redis = MagicMock()
 
         self.assertEqual(await redis_dependency.__call__(), redis_dependency.redis)
+
+    @patch.object(redis, "disabled_modules", [])
+    async def test_redis_dependency_call_without_init(self):
+        redis_dependency: RedisDependency = RedisDependency()
+        redis_dependency.redis = None
+        redis_dependency.init = AsyncMock()
+
+        self.assertEqual(await redis_dependency.__call__(), None)
+        redis_dependency.init.assert_called_once()
 
     @patch.object(redis, "disabled_modules", [])
     async def test_get_redis(self):
