@@ -91,9 +91,7 @@ class Session:
         else:
             session_id = result
         await (await redis_dependency()).set(
-            f"session:id:{session_id}",
-            self.default_data.json(),
-            expire=self.session_expire
+            f"session:id:{session_id}", self.default_data.json(), expire=self.session_expire
         )
         return session_id
 
@@ -103,9 +101,7 @@ class Session:
 
     async def update_session(self, request: Request, data: BaseModel) -> None:
         await (await redis_dependency()).set(
-            f"session:id:{request.state.session_id}",
-            data.json(),
-            expire=self.session_expire
+            f"session:id:{request.state.session_id}", data.json(), expire=self.session_expire
         )
 
     async def get_data(self, request: Request) -> BaseModel:

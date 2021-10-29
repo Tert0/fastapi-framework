@@ -207,7 +207,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
-        session.session_expire = 10**10
+        session.session_expire = 10 ** 10
         request = MagicMock()
         request.state.session_id = "TEST_SESSION_ID"
         data = MagicMock()
