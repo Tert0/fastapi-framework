@@ -112,12 +112,7 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = MagicMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(
-            app,
-            BaseModel,
-            BaseModel(),
-            middleware=session_middleware_mock
-        )
+        session = Session(app, BaseModel, BaseModel(), middleware=session_middleware_mock)
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
@@ -132,12 +127,7 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = AsyncMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(
-            app,
-            BaseModel,
-            BaseModel(),
-            middleware=session_middleware_mock
-        )
+        session = Session(app, BaseModel, BaseModel(), middleware=session_middleware_mock)
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
