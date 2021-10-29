@@ -68,10 +68,10 @@ class Session:
         self.session_expire = session_expire
 
         async def _middleware(request: Request, call_next: RequestResponseEndpoint) -> Response:
-            result: Union[Request, Coroutine] = await middleware(self, request, call_next)
-            if isinstance(result, Response):
-                return result
-            return await result
+            result: Union[Request, Coroutine] = middleware(self, request, call_next)
+            if isinstance(result, Coroutine):
+                return await result
+            return result
 
         app.add_middleware(BaseHTTPMiddleware, dispatch=_middleware)
 

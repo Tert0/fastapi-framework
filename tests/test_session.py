@@ -105,6 +105,46 @@ class TestSession(IsolatedAsyncioTestCase):
         self.assertEqual(session.session_id_callback, fetch_session_id)
         self.assertEqual(session.generate_session_id_callback, generate_session_id)
 
+    async def test_middleware_wrapper(self):
+        app = MagicMock()
+        request = MagicMock()
+        call_next = AsyncMock()
+        session_middleware_mock = MagicMock()
+        session_middleware_mock.return_value = MagicMock()
+
+        session = Session(
+            app,
+            BaseModel,
+            BaseModel(),
+            middleware=session_middleware_mock
+        )
+
+        middleware = app.add_middleware.call_args[1]["dispatch"]
+
+        await middleware(request, call_next)
+
+        session_middleware_mock.assert_called_once_with(session, request, call_next)
+
+    async def test_middleware_wrapper_async(self):
+        app = MagicMock()
+        request = MagicMock()
+        call_next = AsyncMock()
+        session_middleware_mock = AsyncMock()
+        session_middleware_mock.return_value = MagicMock()
+
+        session = Session(
+            app,
+            BaseModel,
+            BaseModel(),
+            middleware=session_middleware_mock
+        )
+
+        middleware = app.add_middleware.call_args[1]["dispatch"]
+
+        await middleware(request, call_next)
+
+        session_middleware_mock.assert_called_once_with(session, request, call_next)
+
     async def test_fetch_session_id(self):
         request = MagicMock()
         session = MagicMock()
