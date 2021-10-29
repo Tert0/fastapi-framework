@@ -46,6 +46,7 @@ class Session:
     default_data: BaseModel
     session_id_callback: Union[Callable[[Request], None], Callable[[Request], Coroutine]]
     generate_session_id_callback: Union[Callable[[], str], Callable[[], Coroutine]]
+    session_expire: int
 
     def __init__(
         self,
@@ -58,12 +59,14 @@ class Session:
             Callable[["Session", Request, RequestResponseEndpoint], Response],
             Callable[["Session", Request, RequestResponseEndpoint], Coroutine],
         ] = session_middleware,
+        session_expire: int = 60 * 60 * 24,
     ) -> None:
         app.add_middleware(BaseHTTPMiddleware, dispatch=middleware)
         self.model = model
         self.default_data = default_data
         self.session_id_callback = session_id_callback
         self.generate_session_id_callback = generate_session_id_callback
+        self.session_expire = session_expire
 
     async def fetch_session_id(self, request: Request) -> None:
         result: Union[None, Coroutine] = self.session_id_callback(request)
@@ -71,7 +74,10 @@ class Session:
             await result
 
     async def session_exists(self, request: Request) -> bool:
-        return getattr(request.state, "session_id") is not None
+        session_id: Optional[str] = getattr(request.state, "session_id", None)
+        if session_id is None:
+            return False
+        return await (await redis_dependency()).exists(f"session:id:{session_id}")
 
     async def create_session(self) -> str:
         result: Union[str, Coroutine] = self.generate_session_id_callback()
@@ -80,15 +86,23 @@ class Session:
             session_id = await result
         else:
             session_id = result
-        await (await redis_dependency()).set(f"session:id:{session_id}", self.default_data.json())
+        await (await redis_dependency()).set(
+            f"session:id:{session_id}",
+            self.default_data.json(),
+            expire=self.session_expire
+        )
         return session_id
 
     async def add_session_id(self, response: Response, session_id: str) -> Response:
-        response.set_cookie("SESSION_ID", session_id)
+        response.set_cookie("SESSION_ID", session_id, httponly=True)
         return response
 
     async def update_session(self, request: Request, data: BaseModel) -> None:
-        await (await redis_dependency()).set(f"session:id:{request.state.session_id}", data.json())
+        await (await redis_dependency()).set(
+            f"session:id:{request.state.session_id}",
+            data.json(),
+            expire=self.session_expire
+        )
 
     async def get_data(self, request: Request) -> BaseModel:
         raw_data: str = await (await redis_dependency()).get(f"session:id:{request.state.session_id}")
