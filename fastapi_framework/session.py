@@ -61,12 +61,16 @@ class Session:
         ] = session_middleware,
         session_expire: int = 60 * 60 * 24,
     ) -> None:
-        app.add_middleware(BaseHTTPMiddleware, dispatch=middleware)
         self.model = model
         self.default_data = default_data
         self.session_id_callback = session_id_callback
         self.generate_session_id_callback = generate_session_id_callback
         self.session_expire = session_expire
+
+        async def _middleware(request: Request, call_next: RequestResponseEndpoint) -> Response:
+            return await middleware(self, request, call_next)
+
+        app.add_middleware(BaseHTTPMiddleware, dispatch=_middleware)
 
     async def fetch_session_id(self, request: Request) -> None:
         result: Union[None, Coroutine] = self.session_id_callback(request)
