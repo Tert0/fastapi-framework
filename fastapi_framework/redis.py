@@ -84,6 +84,8 @@ class RedisDependency:
     redis: Optional[InMemoryBackend] = None
 
     async def __call__(self):
+        if self.redis is None:
+            await self.init()
         return self.redis
 
     async def init(self):

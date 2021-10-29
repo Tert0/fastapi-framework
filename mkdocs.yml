@@ -59,6 +59,11 @@ nav:
       - rate_limit/example.md
   - Config:
       - config/index.md
+  - Session:
+      - session/index.md
+      - session/initialize.md
+      - session/callbacks-middleware.md
+      - session/session-data.md
 
 markdown_extensions:
   - pymdownx.highlight

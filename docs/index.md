@@ -18,6 +18,7 @@ It improves things like things like `Database`,
 - ❌ FastAPI Permission System (for routes)
 - ✅ Rate Limits
 - ✅ Config Parser
+- ✅ Session System
 
 # License
 
