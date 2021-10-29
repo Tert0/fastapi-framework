@@ -1,4 +1,5 @@
 import random
+from unittest.mock import ANY
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch, MagicMock, AsyncMock
 
@@ -98,7 +99,7 @@ class TestSession(IsolatedAsyncioTestCase):
 
         session = Session(app, model, default_data)
 
-        app.add_middleware.assert_called_once_with(BaseHTTPMiddleware, dispatch=session_middleware)
+        app.add_middleware.assert_called_once_with(BaseHTTPMiddleware, dispatch=ANY)
         self.assertEqual(session.model, model)
         self.assertEqual(session.default_data, default_data)
         self.assertEqual(session.session_id_callback, fetch_session_id)
