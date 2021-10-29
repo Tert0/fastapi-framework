@@ -15,9 +15,9 @@ requires = [
     "passlib==1.7.4",
     "PyJWT==2.2.0",
     "python-dotenv==0.19.0",
-    "SQLAlchemy==1.4.25",
+    "SQLAlchemy==1.4.26",
     "uvicorn==0.15.0",
-    "pyyaml==5.4.1",
+    "pyyaml==6.0",
     "toml==0.10.2",
     "starlette==0.16.0",
     "pydantic==1.8.2"
