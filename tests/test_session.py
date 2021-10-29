@@ -122,16 +122,32 @@ class TestSession(IsolatedAsyncioTestCase):
 
         session.session_id_callback.assert_called_once_with(request)
 
-    async def test_session_exists_with_existing_session(self):
+    async def test_session_exists_with_existing_session_id(self):
         request = MagicMock()
         request.state.session_id = "TEST_SESSION_ID"
+
+        session = AsyncMock()
+
+        exists = await Session.session_exists(session, request)
+
+        self.assertEqual(exists, False)
+
+    @patch("fastapi_framework.session.redis_dependency", new_callable=AsyncMock)
+    async def test_session_exists_with_existing_session(self, redis_dependency_mock: AsyncMock):
+        ram_backend = RAMBackend()
+        redis_dependency_mock.return_value = ram_backend
+
+        request = MagicMock()
+        request.state.session_id = "TEST_SESSION_ID"
+        await ram_backend.set("session:id:TEST_SESSION_ID", "data")
+
         session = AsyncMock()
 
         exists = await Session.session_exists(session, request)
 
         self.assertEqual(exists, True)
 
-    async def test_session_exists_without_existing_session(self):
+    async def test_session_exists_without_existing_session_id(self):
         request = MagicMock()
         request.state.session_id = None
         session = AsyncMock()
@@ -146,6 +162,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
+        session.session_expire = 10 ** 10
         session.generate_session_id_callback = MagicMock()
         session.generate_session_id_callback.return_value = "TEST_GENERATED_SESSION"
         session.default_data.json = MagicMock()
@@ -163,6 +180,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
+        session.session_expire = 10 ** 10
         session.generate_session_id_callback.return_value = "TEST_GENERATED_SESSION"
         session.default_data.json = MagicMock()
         session.default_data.json.return_value = '{"default": "data"}'
@@ -175,11 +193,12 @@ class TestSession(IsolatedAsyncioTestCase):
 
     async def test_add_session_id(self):
         session = AsyncMock()
+        session.session_expire = 0
         response = MagicMock()
 
         new_response = await Session.add_session_id(session, response, "TEST_SESSION_ID")
 
-        response.set_cookie.assert_called_once_with("SESSION_ID", "TEST_SESSION_ID")
+        response.set_cookie.assert_called_once_with("SESSION_ID", "TEST_SESSION_ID", httponly=True)
         self.assertEqual(new_response, response)
 
     @patch("fastapi_framework.session.redis_dependency", new_callable=AsyncMock)
@@ -188,6 +207,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
+        session.session_expire = 10**10
         request = MagicMock()
         request.state.session_id = "TEST_SESSION_ID"
         data = MagicMock()
