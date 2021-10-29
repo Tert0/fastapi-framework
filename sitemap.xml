@@ -2,117 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://tert0.github.io/fastapi-framework/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/environment/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/config/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/example/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/insert_delete_modify/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/models/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/database/query/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/delete_exists/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/expires/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/increase_decrease/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/set_get/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/api/sets/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/in_memory_backend/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/redis/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/in_memory_backends/redis/connection/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/example/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/jwt/jwt_tokens/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/rate_limit/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/rate_limit/example/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://tert0.github.io/fastapi-framework/rate_limit/rate_limit_manager/</loc>
-         <lastmod>2021-10-28</lastmod>
+         <lastmod>2021-10-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://tert0.github.io/fastapi-framework/session/</loc>
+         <lastmod>2021-10-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://tert0.github.io/fastapi-framework/session/callbacks-middleware/</loc>
+         <lastmod>2021-10-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://tert0.github.io/fastapi-framework/session/example/</loc>
+         <lastmod>2021-10-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://tert0.github.io/fastapi-framework/session/initialize/</loc>
+         <lastmod>2021-10-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://tert0.github.io/fastapi-framework/session/session-data/</loc>
+         <lastmod>2021-10-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

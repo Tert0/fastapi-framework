@@ -13,21 +13,21 @@
         <meta name="author" content="https://github.com/Tert0/">
       
       
-        <link rel="canonical" href="https://tert0.github.io/fastapi-framework/jwt/">
+        <link rel="canonical" href="https://tert0.github.io/fastapi-framework/session/example/">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.5">
     
     
       
-        <title>JWT - Fastapi Framework Documentation</title>
+        <title>Example - Fastapi Framework Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.cdeb8541.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cdeb8541.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -61,7 +61,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#jwt" class="md-skip">
+        <a href="#example" class="md-skip">
           Skip to content
         </a>
       
@@ -84,7 +84,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../.." title="Fastapi Framework Documentation" class="md-header__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              JWT
+              Example
             
           </span>
         </div>
@@ -206,7 +206,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
+    <a href="../.." title="Fastapi Framework Documentation" class="md-nav__button md-logo" aria-label="Fastapi Framework Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -238,7 +238,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         FastAPI Framework
       </a>
     </li>
@@ -253,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../environment/" class="md-nav__link">
+      <a href="../../environment/" class="md-nav__link">
         Environment
       </a>
     </li>
@@ -294,7 +294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/" class="md-nav__link">
+      <a href="../../database/" class="md-nav__link">
         Database
       </a>
     </li>
@@ -308,7 +308,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/models/" class="md-nav__link">
+      <a href="../../database/models/" class="md-nav__link">
         Models
       </a>
     </li>
@@ -322,7 +322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/query/" class="md-nav__link">
+      <a href="../../database/query/" class="md-nav__link">
         Query
       </a>
     </li>
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/insert_delete_modify/" class="md-nav__link">
+      <a href="../../database/insert_delete_modify/" class="md-nav__link">
         Insert, Delete and Modify Data
       </a>
     </li>
@@ -350,7 +350,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/example/" class="md-nav__link">
+      <a href="../../database/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -424,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/redis/" class="md-nav__link">
+      <a href="../../in_memory_backends/redis/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -438,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/redis/connection/" class="md-nav__link">
+      <a href="../../in_memory_backends/redis/connection/" class="md-nav__link">
         Redis Connection
       </a>
     </li>
@@ -485,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/in_memory_backend/" class="md-nav__link">
+      <a href="../../in_memory_backends/in_memory_backend/" class="md-nav__link">
         In Memory Backend
       </a>
     </li>
@@ -532,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -546,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/set_get/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/set_get/" class="md-nav__link">
         Set and Get
       </a>
     </li>
@@ -560,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/expires/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/expires/" class="md-nav__link">
         Expires
       </a>
     </li>
@@ -574,7 +574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/increase_decrease/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/increase_decrease/" class="md-nav__link">
         Increase and Decrease
       </a>
     </li>
@@ -588,7 +588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/delete_exists/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/delete_exists/" class="md-nav__link">
         Delete and Exists
       </a>
     </li>
@@ -602,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../in_memory_backends/api/sets/" class="md-nav__link">
+      <a href="../../in_memory_backends/api/sets/" class="md-nav__link">
         Sets
       </a>
     </li>
@@ -629,14 +629,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
@@ -657,21 +655,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../jwt/" class="md-nav__link">
         JWT
       </a>
-      
     </li>
   
 
@@ -683,7 +671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="jwt_tokens/" class="md-nav__link">
+      <a href="../../jwt/jwt_tokens/" class="md-nav__link">
         JWT Tokens
       </a>
     </li>
@@ -697,7 +685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="example/" class="md-nav__link">
+      <a href="../../jwt/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -745,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rate_limit/" class="md-nav__link">
+      <a href="../../rate_limit/" class="md-nav__link">
         Rate Limit
       </a>
     </li>
@@ -759,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rate_limit/rate_limit_manager/" class="md-nav__link">
+      <a href="../../rate_limit/rate_limit_manager/" class="md-nav__link">
         Rate Limit Manager
       </a>
     </li>
@@ -773,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rate_limit/example/" class="md-nav__link">
+      <a href="../../rate_limit/example/" class="md-nav__link">
         Example
       </a>
     </li>
@@ -821,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../config/" class="md-nav__link">
+      <a href="../../config/" class="md-nav__link">
         Config
       </a>
     </li>
@@ -869,7 +857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../session/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Session
       </a>
     </li>
@@ -883,7 +871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../session/initialize/" class="md-nav__link">
+      <a href="../initialize/" class="md-nav__link">
         Initialize
       </a>
     </li>
@@ -897,7 +885,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../session/callbacks-middleware/" class="md-nav__link">
+      <a href="../callbacks-middleware/" class="md-nav__link">
         Custom Callbacks and Middleware
       </a>
     </li>
@@ -911,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../session/session-data/" class="md-nav__link">
+      <a href="../session-data/" class="md-nav__link">
         Session Data
       </a>
     </li>
@@ -956,13 +944,52 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Tert0/fastapi-framework/edit/master/docs/jwt/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Tert0/fastapi-framework/edit/master/docs/session/example.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="jwt">JWT</h1>
-<p>The JWT Module is bases on <a href="https://pyjwt.readthedocs.io/en/latest/">PyJWT</a>.</p>
+                <h1 id="example">Example</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+<span class="kn">from</span> <span class="nn">fastapi.requests</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">fastapi_framework.session</span> <span class="kn">import</span> <span class="n">fetch_session_id</span><span class="p">,</span> <span class="n">generate_session_id</span><span class="p">,</span> <span class="n">session_middleware</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+
+<span class="k">class</span> <span class="nc">SessionData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">age</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span>
+    <span class="n">app</span><span class="p">,</span>  <span class="c1"># FastAPI App</span>
+    <span class="n">SessionData</span><span class="p">,</span>  <span class="c1"># Pydantic Model</span>
+    <span class="n">SessionData</span><span class="p">(</span>
+        <span class="n">username</span><span class="o">=</span><span class="s2">&quot;test_user&quot;</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># Default Data</span>
+    <span class="n">session_id_callback</span><span class="o">=</span><span class="n">fetch_session_id</span><span class="p">,</span>  <span class="c1"># Fetch Session ID Callback</span>
+    <span class="n">generate_session_id_callback</span><span class="o">=</span><span class="n">generate_session_id</span><span class="p">,</span>  <span class="c1"># Session ID Generator</span>
+    <span class="n">middleware</span><span class="o">=</span><span class="n">session_middleware</span><span class="p">,</span>  <span class="c1"># Session System Middleware</span>
+    <span class="n">session_expire</span><span class="o">=</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span><span class="p">,</span>  <span class="c1"># Session Expire Time in Seconds</span>
+<span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{username}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">update_username</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+    <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">update_session</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;Updated&quot;</span>
+</code></pre></div>
                 
               
               
@@ -978,41 +1005,6 @@
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../in_memory_backends/api/sets/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sets" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Sets
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="jwt_tokens/" class="md-footer__link md-footer__link--next" aria-label="Next: JWT Tokens" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              JWT Tokens
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1048,10 +1040,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e84347e.min.js"></script>
       
     
   </body>
