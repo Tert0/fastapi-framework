@@ -2,7 +2,6 @@ name: Deploy Docs
 
 on:
   - push
-  - pull_request
 
 env:
   PYTHON_VERSION: 3.9

@@ -19,11 +19,5 @@ jobs:
       - name: Run unit tests with coverage
         run: docker-compose up --build --abort-on-container-exit
 
-      - name: Send coverage report to codeclimate
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          set -ex
-          wget -O reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-          chmod +x reporter
-          ./reporter after-build
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v2
