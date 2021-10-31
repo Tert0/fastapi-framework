@@ -9,3 +9,19 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    reviewers:
+      - "Tert0"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "Tert0"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "Tert0"
