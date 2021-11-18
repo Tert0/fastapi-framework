@@ -7,5 +7,5 @@ SQLAlchemy==1.4.27
 uvicorn==0.15.0
 pyyaml==6.0
 toml==0.10.2
-starlette==0.17.0
+starlette==0.17.1
 pydantic==1.8.2
