@@ -8,4 +8,4 @@ uvicorn==0.16.0
 pyyaml==6.0
 toml==0.10.2
 starlette==0.17.1
-pydantic==1.8.2
+pydantic==1.9.0
