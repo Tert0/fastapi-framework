@@ -4,7 +4,7 @@ passlib==1.7.4
 PyJWT==2.3.0
 python-dotenv==0.19.2
 SQLAlchemy==1.4.31
-uvicorn==0.17.1
+uvicorn==0.17.5
 pyyaml==6.0
 toml==0.10.2
 starlette==0.18.0
