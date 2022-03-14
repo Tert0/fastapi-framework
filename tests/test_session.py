@@ -193,7 +193,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
-        session.session_expire = 10 ** 10
+        session.session_expire = 10**10
         session.generate_session_id_callback = MagicMock()
         session.generate_session_id_callback.return_value = "TEST_GENERATED_SESSION"
         session.default_data.json = MagicMock()
@@ -211,7 +211,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
-        session.session_expire = 10 ** 10
+        session.session_expire = 10**10
         session.generate_session_id_callback.return_value = "TEST_GENERATED_SESSION"
         session.default_data.json = MagicMock()
         session.default_data.json.return_value = '{"default": "data"}'
@@ -238,7 +238,7 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
 
         session = AsyncMock()
-        session.session_expire = 10 ** 10
+        session.session_expire = 10**10
         request = MagicMock()
         request.state.session_id = "TEST_SESSION_ID"
         data = MagicMock()
