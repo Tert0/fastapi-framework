@@ -4,6 +4,7 @@ from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch
 
 from fastapi import HTTPException, FastAPI, Depends
+from pydantic import BaseModel, constr, conint
 from sqlalchemy import Column, String, Integer
 
 from fastapi_framework.database import (
@@ -27,7 +28,7 @@ app = FastAPI()
 class User(Base):
     __tablename__ = "users"
     id: Union[Column, int] = Column(Integer, primary_key=True)
-    name: Union[Column, str] = Column(String(255))
+    name: Union[Column, str] = Column(String(255), unique=True)
 
     @staticmethod
     async def create(name: str) -> "User":
@@ -36,24 +37,32 @@ class User(Base):
         await db.add(row)
         return row
 
+    def to_pydantic_user(self) -> "PydanticUser":
+        return PydanticUser(id=self.id, name=self.name)
+
+
+class PydanticUser(BaseModel):
+    id: int
+    name: constr(max_length=255)
+
 
 @app.get("/users")
-async def get_users(db: DB = Depends(database_dependency)):
-    return await db.all(select(User))
+async def get_users(db: DB = Depends(database_dependency)) -> List[PydanticUser]:
+    return list(map(User.to_pydantic_user, await db.all(select(User))))
 
 
 @app.get("/users/{name}")
-async def get_user_by_name(name: str, db: DB = Depends(database_dependency)):
-    return await db.all(select(User).filter_by(name=name))
+async def get_user_by_name(name: str, db: DB = Depends(database_dependency)) -> PydanticUser:
+    return (await db.first(select(User).filter_by(name=name))).to_pydantic_user()
 
 
 @app.post("/users/{name}")
-async def add_user(name: str, db: DB = Depends(database_dependency)) -> User:
+async def add_user(name: str, db: DB = Depends(database_dependency)) -> PydanticUser:
     if await db.exists(select(User).filter_by(name=name)):
         raise HTTPException(409, "Username already used")
     user = await User.create(name)
     await db.commit()
-    return user
+    return user.to_pydantic_user()
 
 
 @app.delete("/users/{name}")
@@ -163,7 +172,8 @@ class TestDatabase(IsolatedAsyncioTestCase):
             response: Response = await ac.get(f"/users/{username}")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(response.json(), List)
+
+        self.assertIsInstance(PydanticUser.parse_obj(response.json()), PydanticUser)
 
     async def test_remove_user(self):
         username = "".join(choices(ascii_letters, k=100))
