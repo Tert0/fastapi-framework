@@ -32,7 +32,9 @@ doc = ["mkdocs-material"]
 lint = [
     "black",
     "flake8",
-    "mypy"
+    "mypy",
+    "types-PyYAML",
+    "types-toml"
 ]
 
 [tool.flit.metadata.urls]

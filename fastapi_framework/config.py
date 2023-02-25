@@ -50,7 +50,7 @@ class ConfigMeta(type):
             if key in annotations:
                 type_hint = annotations[key]
             value: _ConfigField = dct[key]
-            type_hint = type_hint if not getattr(type_hint, "__origin__", None) else type_hint.__origin__
+            type_hint = type_hint if not hasattr(type_hint, "__origin__") else type_hint.__origin__ # type: ignore
             if type_hint is not None:
                 try:
                     type_hint.__call__()
@@ -95,7 +95,7 @@ class ConfigMeta(type):
         for key in config_entries.keys():
             config_key = config_entries[key].name
             if config_key in config.keys():
-                type_hint = config_entries.get(key).type_hint
+                type_hint = config_entries[key].type_hint
                 if type_hint:
                     value = type_hint(config[config_key]) if config[config_key] is not None else None
                 else:
@@ -104,7 +104,7 @@ class ConfigMeta(type):
                     value = middleware(value)
                 setattr(config_class, key, value)
             else:
-                value = config_entries.get(config_key).default_value
+                value = config_entries[config_key].default_value
                 setattr(config_class, key, value)
 
         return config_class
