@@ -50,7 +50,7 @@ class ConfigMeta(type):
             if key in annotations:
                 type_hint = annotations[key]
             value: _ConfigField = dct[key]
-            type_hint = type_hint if not hasattr(type_hint, "__origin__") else type_hint.__origin__ # type: ignore
+            type_hint = type_hint if not hasattr(type_hint, "__origin__") else type_hint.__origin__  # type: ignore
             if type_hint is not None:
                 try:
                     type_hint.__call__()
