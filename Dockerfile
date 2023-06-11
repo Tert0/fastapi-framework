@@ -6,11 +6,14 @@ WORKDIR /fastapi_framework
 
 COPY coverage.sh .
 
-COPY requirements.txt .
-
-RUN pip install -r requirements.txt && pip install aiosqlite coverage httpx
+#COPY requirements.txt .
+COPY README.md .
+COPY pyproject.toml .
 
 COPY fastapi_framework/ ./fastapi_framework
+
+#RUN pip install -r requirements.txt && pip install aiosqlite coverage httpx
+RUN pip install -e .[test]
 
 COPY tests/ ./tests
 
