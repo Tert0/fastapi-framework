@@ -15,6 +15,9 @@ from fastapi_framework.session import (
     SessionNotExists,
 )
 
+class TestSessionModel(BaseModel):
+    id: int
+    data: str
 
 class TestSession(IsolatedAsyncioTestCase):
     async def test_fetch_session_id_without_session_id(self):
@@ -94,8 +97,8 @@ class TestSession(IsolatedAsyncioTestCase):
 
     async def test_create_session_system(self):
         app = MagicMock()
-        model = BaseModel
-        default_data = BaseModel()
+        model = TestSessionModel
+        default_data = TestSessionModel(id=10, data="test_create_session_system")
 
         session = Session(app, model, default_data)
 
@@ -112,7 +115,7 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = MagicMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(app, BaseModel, BaseModel(), middleware=session_middleware_mock)
+        session = Session(app, TestSessionModel, TestSessionModel(id=5, data="test_middleware_wrapper"), middleware=session_middleware_mock)
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
@@ -127,7 +130,7 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = AsyncMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(app, BaseModel, BaseModel(), middleware=session_middleware_mock)
+        session = Session(app, TestSessionModel, TestSessionModel(id=1, data="test_middleware_wrapper_async"), middleware=session_middleware_mock)
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
@@ -254,15 +257,17 @@ class TestSession(IsolatedAsyncioTestCase):
         redis_dependency_mock.return_value = ram_backend
         await ram_backend.set("session:id:TEST_SESSION_ID", "TEST_DATA")
 
+        data = TestSessionModel(id=15, data="test_get_data")
+
         request = MagicMock()
         request.state.session_id = "TEST_SESSION_ID"
         session = AsyncMock()
         session.model.parse_raw = MagicMock()
-        session.model.parse_raw.return_value = BaseModel()
+        session.model.parse_raw.return_value = data
 
         data = await Session.get_data(session, request)
 
-        self.assertEqual(data, BaseModel())
+        self.assertEqual(data, data)
         session.model.parse_raw.assert_called_once_with(b"TEST_DATA")
 
     @patch("fastapi_framework.session.redis_dependency", new_callable=AsyncMock)
