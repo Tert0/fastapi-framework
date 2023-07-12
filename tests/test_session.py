@@ -15,9 +15,11 @@ from fastapi_framework.session import (
     SessionNotExists,
 )
 
+
 class TestSessionModel(BaseModel):
     id: int
     data: str
+
 
 class TestSession(IsolatedAsyncioTestCase):
     async def test_fetch_session_id_without_session_id(self):
@@ -115,7 +117,12 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = MagicMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(app, TestSessionModel, TestSessionModel(id=5, data="test_middleware_wrapper"), middleware=session_middleware_mock)
+        session = Session(
+            app,
+            TestSessionModel,
+            TestSessionModel(id=5, data="test_middleware_wrapper"),
+            middleware=session_middleware_mock,
+        )
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
@@ -130,7 +137,12 @@ class TestSession(IsolatedAsyncioTestCase):
         session_middleware_mock = AsyncMock()
         session_middleware_mock.return_value = MagicMock()
 
-        session = Session(app, TestSessionModel, TestSessionModel(id=1, data="test_middleware_wrapper_async"), middleware=session_middleware_mock)
+        session = Session(
+            app,
+            TestSessionModel,
+            TestSessionModel(id=1, data="test_middleware_wrapper_async"),
+            middleware=session_middleware_mock,
+        )
 
         middleware = app.add_middleware.call_args[1]["dispatch"]
 
