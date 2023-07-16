@@ -21,7 +21,7 @@ dependencies = [
     "SQLAlchemy==2.0.18",
     "pyyaml==6.0",
     "toml==0.10.2",
-    "pydantic==2.0.2"
+    "pydantic==2.0.3"
 ]
 
 [project.urls]
