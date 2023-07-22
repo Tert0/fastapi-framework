@@ -19,7 +19,7 @@ dependencies = [
     "PyJWT==2.8.0",
     "python-dotenv==1.0.0",
     "SQLAlchemy==2.0.19",
-    "pyyaml==6.0",
+    "pyyaml==6.0.1",
     "toml==0.10.2",
     "pydantic==2.0.3"
 ]
