@@ -17,7 +17,7 @@ jobs:
         run: touch coverage.xml
 
       - name: Run unit tests with coverage
-        run: docker-compose up --build --abort-on-container-exit
+        run: docker compose up --build --abort-on-container-exit
 
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
