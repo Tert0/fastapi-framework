@@ -3,9 +3,9 @@ from typing import TypeVar, Dict
 
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy.future import select as sa_select
-from sqlalchemy.orm import DeclarativeMeta, declarative_base, sessionmaker
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
 from sqlalchemy.sql import Executable
 from sqlalchemy.sql.expression import exists as sa_exists, delete as sa_delete, Delete
@@ -40,26 +40,30 @@ def delete(table) -> Delete:
     return sa_delete(table)
 
 
+class Base(DeclarativeBase):
+    pass
+
+
 class DB:
     """An async SQLAlchemy ORM wrapper"""
 
-    Base: DeclarativeMeta
     _engine: AsyncEngine
     _session: AsyncSession
 
-    def __init__(self, driver: str, options: Dict = {"pool_size": 20, "max_overflow": 20}, **kwargs):
-        url: str = URL.create(drivername=driver, **kwargs)
+    def __init__(self, driver: str, options=None, **kwargs):
+        if options is None:
+            options = {"pool_size": 20, "max_overflow": 20}
+        url = URL.create(drivername=driver, **kwargs)
         self._engine = create_async_engine(url, echo=True, pool_pre_ping=True, pool_recycle=300, **options)
-        self.Base = declarative_base()
-        self._session: AsyncSession = sessionmaker(self._engine, expire_on_commit=False, class_=AsyncSession)()
+        self._session = async_sessionmaker(self._engine, expire_on_commit=False)()
 
     async def create_tables(self):
         """Creates all Model Tables"""
         async with self._engine.begin() as conn:
-            await conn.run_sync(self.Base.metadata.create_all)
+            await conn.run_sync(Base.metadata.create_all)
 
     async def add(self, obj: T) -> T:
-        """Adds an Row to the Database"""
+        """Adds a Row to the Database"""
         self._session.add(obj)
         return obj
 
@@ -153,4 +157,3 @@ class DatabaseDependency:
 
 
 database_dependency: DatabaseDependency = DatabaseDependency()
-Base: DeclarativeMeta = database_dependency.db.Base

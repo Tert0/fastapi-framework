@@ -1,7 +1,8 @@
 from os import getenv
 from typing import Union, Optional
 
-from sqlalchemy import Column, String
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from .redis import redis_dependency, Redis
 from .database import database_dependency, DB, select, Base
@@ -11,8 +12,8 @@ CACHE_TTL = int(getenv("CACHE_TTL", str(60 * 60 * 5)))
 
 class SettingsModel(Base):
     __tablename__ = "settings"
-    key: Union[str, Column] = Column(String(255), primary_key=True, unique=True)
-    value: Union[str, Column] = Column(String())
+    key: Mapped[str] = mapped_column(String(255), primary_key=True, unique=True)
+    value: Mapped[str] = mapped_column(String())
 
     @staticmethod
     async def create(key: str, value: Union[str, int, float, bool], db: DB) -> "SettingsModel":

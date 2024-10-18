@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 from fastapi import HTTPException, FastAPI, Depends
 from pydantic import BaseModel, constr, conint
 from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import mapped_column, Mapped
 
 from fastapi_framework.database import (
     select,
@@ -27,8 +28,8 @@ app = FastAPI()
 
 class User(Base):
     __tablename__ = "users"
-    id: Union[Column, int] = Column(Integer, primary_key=True)
-    name: Union[Column, str] = Column(String(255), unique=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), unique=True)
 
     @staticmethod
     async def create(name: str) -> "User":
@@ -48,7 +49,7 @@ class PydanticUser(BaseModel):
 
 @app.get("/users")
 async def get_users(db: DB = Depends(database_dependency)) -> List[PydanticUser]:
-    return list(map(User.to_pydantic_user, await db.all(select(User))))
+    return [user.to_pydantic_user() for user in await db.all(select(User))]
 
 
 @app.get("/users/{name}")

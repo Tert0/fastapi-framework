@@ -97,15 +97,15 @@ class ConfigMeta(type):
             if config_key in config.keys():
                 type_hint = config_entries[key].type_hint
                 if type_hint:
-                    value = type_hint(config[config_key]) if config[config_key] is not None else None
+                    cfg_value = type_hint(config[config_key]) if config[config_key] is not None else None
                 else:
-                    value = config[config_key]
+                    cfg_value = config[config_key]
                 for middleware in config_entries[key].middlewares:
-                    value = middleware(value)
-                setattr(config_class, key, value)
+                    cfg_value = middleware(cfg_value)
+                setattr(config_class, key, cfg_value)
             else:
-                value = config_entries[config_key].default_value
-                setattr(config_class, key, value)
+                cfg_value = config_entries[config_key].default_value
+                setattr(config_class, key, cfg_value)
 
         return config_class
 
