@@ -15,6 +15,8 @@ async def default_callback(headers: Dict):
 
 async def default_get_uuid(request: Request) -> str:
     """Default getter for UUID working with Users IP"""
+    if request.client is None:
+        return "unknown-ip"
     return f"{request.client.host}"
 
 
