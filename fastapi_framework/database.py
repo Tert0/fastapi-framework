@@ -1,11 +1,11 @@
 from os import getenv
-from typing import TypeVar, Dict, Type, TypeAlias
+from typing import TypeVar, Dict
 
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy.future import select as sa_select
-from sqlalchemy.orm import DeclarativeMeta, declarative_base, sessionmaker, DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
 from sqlalchemy.sql import Executable
 from sqlalchemy.sql.expression import exists as sa_exists, delete as sa_delete, Delete
