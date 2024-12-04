@@ -3,11 +3,12 @@ from os import getenv
 from typing import Dict
 
 import jwt
-from .redis import Redis
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer
 from passlib.context import CryptContext
+
+from .redis import Redis
 
 load_dotenv()
 

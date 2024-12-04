@@ -1,7 +1,7 @@
-from typing import Union, Callable, Dict, Coroutine, Optional, Any
+from typing import Any, Callable, Coroutine, Dict, Optional, Union
 
-from fastapi import Request, HTTPException, Response
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import HTTPException, Request, Response
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from .in_memory_backend import InMemoryBackend
 from .jwt_auth import get_data

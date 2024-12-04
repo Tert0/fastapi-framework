@@ -1,6 +1,6 @@
 import time
-from typing import Dict, Any, Optional, Set, Union, List
 from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional, Set, Union
 
 
 class InMemoryBackend(ABC):

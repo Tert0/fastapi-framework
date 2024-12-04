@@ -1,11 +1,11 @@
 from os import getenv
-from typing import Union, Optional
+from typing import Optional, Union
 
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .redis import redis_dependency, Redis
-from .database import database_dependency, DB, select, Base
+from .database import DB, Base, database_dependency, select
+from .redis import Redis, redis_dependency
 
 CACHE_TTL = int(getenv("CACHE_TTL", str(60 * 60 * 5)))
 

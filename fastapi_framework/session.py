@@ -1,12 +1,13 @@
 import random
 import string
-from typing import Union, Callable, Coroutine, Type, Optional
+from typing import Callable, Coroutine, Optional, Type, Union
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.requests import Request
 from fastapi.responses import Response
-from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
+from pydantic import BaseModel
+from starlette.middleware.base import (BaseHTTPMiddleware,
+                                       RequestResponseEndpoint)
 
 from .redis import redis_dependency
 

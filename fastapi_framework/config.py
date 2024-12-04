@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, Callable, List
+from typing import Any, Callable, Dict, List, Optional
 
 from fastapi_framework import disabled_modules
 

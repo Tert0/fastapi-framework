@@ -1,5 +1,5 @@
 from os import getenv
-from typing import List, Set, Dict
+from typing import Dict, List, Set
 
 from dotenv import load_dotenv
 

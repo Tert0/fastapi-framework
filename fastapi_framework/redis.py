@@ -1,11 +1,11 @@
-from typing import Set, Any, Optional
-
-from aioredis import create_redis_pool
-from aioredis import Redis as RedisConnection
-from dotenv import load_dotenv
 from os import getenv
-from .in_memory_backend import InMemoryBackend, RAMBackend
+from typing import Any, Optional, Set
 
+from aioredis import Redis as RedisConnection
+from aioredis import create_redis_pool
+from dotenv import load_dotenv
+
+from .in_memory_backend import InMemoryBackend, RAMBackend
 from .modules import disabled_modules
 
 load_dotenv()

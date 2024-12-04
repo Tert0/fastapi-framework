@@ -1,24 +1,24 @@
-from datetime import timedelta, datetime
-from typing import Dict, Union, List
+from datetime import datetime, timedelta
+from typing import Dict, List, Union
 from unittest import IsolatedAsyncioTestCase
-from unittest.mock import MagicMock, patch, AsyncMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import jwt
 from aioredis import Redis
-from fastapi import FastAPI, Depends, HTTPException
-from httpx import AsyncClient, Response
+from fastapi import Depends, FastAPI, HTTPException
+from httpx import ASGITransport, AsyncClient, Response
 
 from fastapi_framework import redis_dependency
 from fastapi_framework.jwt_auth import (
-    get_token,
-    create_jwt_token,
     ALGORITHM,
-    get_data,
-    create_access_token,
-    create_refresh_token,
-    invalidate_refresh_token,
     check_refresh_token,
+    create_access_token,
+    create_jwt_token,
+    create_refresh_token,
     generate_tokens,
+    get_data,
+    get_token,
+    invalidate_refresh_token,
 )
 
 app = FastAPI()
@@ -161,10 +161,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
     async def test_check_refresh_token_negative(self):
         redis = AsyncMock()
         redis.smembers = AsyncMock()
-        redis.smembers.return_value = [
-            b"TEST_FALSE_REFRESH_TOKEN",
-            b"TEST_SECOND_FALSE_REFRESH_TOKEN",
-        ]
+        redis.smembers.return_value = [b"TEST_FALSE_REFRESH_TOKEN", b"TEST_SECOND_FALSE_REFRESH_TOKEN"]
 
         result = await check_refresh_token("TEST_REFRESH_TOKEN", redis)
 
@@ -195,7 +192,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_login(self):
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
 
         self.assertEqual(response.status_code, 200)
@@ -206,14 +203,14 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_login_invalid_credentials(self):
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "not_exists", "password": "wrong"})
 
         self.assertEqual(response.status_code, 401)
 
     @patch("fastapi_framework.jwt_auth.SECRET_KEY", "TEST_SECRET_KEY")
     async def test_secret_route(self):
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/token", params={"username": "test", "password": "123"})
 
         self.assertEqual(response.status_code, 200)
@@ -222,7 +219,7 @@ class TestJWTAuth(IsolatedAsyncioTestCase):
         self.assertEqual(response.json()["token_type"], "bearer")
         access_token = response.json()["access_token"]
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/secret", headers={"Authorization": f"Bearer {access_token}"})
 
         self.assertEqual(response.status_code, 200)

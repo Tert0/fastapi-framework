@@ -1,7 +1,8 @@
 import logging
 import sys
-from dotenv import load_dotenv
 from os import getenv
+
+from dotenv import load_dotenv
 
 from .modules import disabled_modules
 

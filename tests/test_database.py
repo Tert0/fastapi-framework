@@ -1,27 +1,26 @@
 from os import getenv
-from typing import Union, List, Dict
+from random import choices
+from string import ascii_letters
+from typing import Dict, List
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import MagicMock, patch
 
-from fastapi import HTTPException, FastAPI, Depends
-from pydantic import BaseModel, constr, conint
-from sqlalchemy import Column, String, Integer
-from sqlalchemy.orm import mapped_column, Mapped
+from fastapi import Depends, FastAPI, HTTPException
+from httpx import ASGITransport, AsyncClient, Response
+from pydantic import BaseModel, constr
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from fastapi_framework.database import (
-    select,
-    filter_by,
-    exists,
-    delete,
-    database_dependency,
     DB,
-    DatabaseDependency,
     Base,
+    DatabaseDependency,
+    database_dependency,
+    delete,
+    exists,
+    filter_by,
+    select,
 )
-
-from httpx import AsyncClient, Response
-from random import choices
-from string import ascii_letters
 
 app = FastAPI()
 
@@ -137,7 +136,7 @@ class TestDatabase(IsolatedAsyncioTestCase):
         db._session.add.assert_called_with(row)
 
     async def test_get_users(self):
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/users")
 
         self.assertIsInstance(response.json(), List)
@@ -145,7 +144,7 @@ class TestDatabase(IsolatedAsyncioTestCase):
     async def test_add_user(self):
         username = "".join(choices(ascii_letters, k=100))
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.post(f"/users/{username}")
 
         self.assertEqual(response.status_code, 200)
@@ -157,7 +156,7 @@ class TestDatabase(IsolatedAsyncioTestCase):
     async def test_add_user_already_exists(self):
         username = "".join(choices(ascii_letters, k=100))
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.post(f"/users/{username}")
             response2: Response = await ac.post(f"/users/{username}")
 
@@ -167,9 +166,9 @@ class TestDatabase(IsolatedAsyncioTestCase):
     async def test_get_user_by_name(self):
         username = "".join(choices(ascii_letters, k=100))
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             await ac.post(f"/users/{username}")
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get(f"/users/{username}")
 
         self.assertEqual(response.status_code, 200)
@@ -179,19 +178,19 @@ class TestDatabase(IsolatedAsyncioTestCase):
     async def test_remove_user(self):
         username = "".join(choices(ascii_letters, k=100))
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.post(f"/users/{username}")
 
         self.assertEqual(response.status_code, 200)
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response = await ac.delete(f"/users/{username}")
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode("utf-8"), "true")
 
     async def test_remove_user_not_exists(self):
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.delete("/users/this_username_dont_exists")
 
         self.assertEqual(response.status_code, 404)

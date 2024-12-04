@@ -1,19 +1,19 @@
 from typing import List
 from unittest import IsolatedAsyncioTestCase
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
-from fastapi import HTTPException, FastAPI, Depends, Request
-from httpx import AsyncClient, Response
+from fastapi import Depends, FastAPI, HTTPException
+from httpx import ASGITransport, AsyncClient, Response
 
+from fastapi_framework import rate_limit, redis_dependency
 from fastapi_framework.rate_limit import (
-    RateLimitManager,
     RateLimiter,
+    RateLimitManager,
     RateLimitTime,
-    default_get_uuid,
     default_callback,
+    default_get_uuid,
     get_uuid_user_id,
 )
-from fastapi_framework import rate_limit, redis_dependency
 
 app = FastAPI()
 
@@ -126,7 +126,7 @@ class TestRateLimit(IsolatedAsyncioTestCase):
     async def test_limited_route(self):
         self.testing_uuid = "test_limited_route"
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             response: Response = await ac.get("/limited")
 
         self.assertEqual(response.status_code, 200)
@@ -137,7 +137,7 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         RateLimitManager.redis = None
 
         with self.assertRaises(Exception):
-            async with AsyncClient(app=app, base_url="https://test") as ac:
+            async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
                 await ac.get("/limited")
 
         RateLimitManager.redis = await redis_dependency()
@@ -147,7 +147,7 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         async_callback = AsyncMock()
         RateLimitManager.callback = async_callback
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             for i in range(4):
                 response: Response = await ac.get("/limited")
 
@@ -162,7 +162,7 @@ class TestRateLimit(IsolatedAsyncioTestCase):
         self.testing_uuid = "test_spam_limited_route"
         responses: List[Response] = []
 
-        async with AsyncClient(app=app, base_url="https://test") as ac:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as ac:
             for _ in range(4):
                 responses.append(await ac.get("/limited"))
 
