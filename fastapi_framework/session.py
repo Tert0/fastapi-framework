@@ -6,8 +6,7 @@ from fastapi import FastAPI
 from fastapi.requests import Request
 from fastapi.responses import Response
 from pydantic import BaseModel
-from starlette.middleware.base import (BaseHTTPMiddleware,
-                                       RequestResponseEndpoint)
+from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
 from .redis import redis_dependency
 

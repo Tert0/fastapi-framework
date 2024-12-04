@@ -3,8 +3,7 @@ from typing import Dict, TypeVar
 
 from dotenv import load_dotenv
 from sqlalchemy.engine import URL
-from sqlalchemy.ext.asyncio import (AsyncEngine, AsyncSession,
-                                    async_sessionmaker, create_async_engine)
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.future import select as sa_select
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
