@@ -1320,7 +1320,7 @@
 
 <h1 id="rate-limit-manager">Rate Limit Manager</h1>
 <p>To use the Raid Limit Feature you have to initialise the Rate Limit Manager.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">RateLimitManager</span><span class="p">,</span> <span class="n">redis_dependency</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">RateLimitManager</span><span class="p">,</span> <span class="n">redis_dependency</span>
 <span class="k">await</span> <span class="n">redis_dependency</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 <span class="k">await</span> <span class="n">RateLimitManager</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="k">await</span> <span class="n">redis_dependency</span><span class="p">())</span>
 </code></pre></div>
@@ -1332,17 +1332,17 @@ You can set</p>
 <h2 id="get_uuid-setting"><code>get_uuid</code> Setting</h2>
 <p>Callback function that returns a UUID used for Identification.</p>
 <p>Example:
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">Request</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">default_get_uuid</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">default_get_uuid</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Default getter for UUID working with Users IP&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div></p>
 <h2 id="callback"><code>callback</code></h2>
 <p>Callback function that will be called when a User gets Raid Limited and tries it again.</p>
 <p>Example:
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">HTTPException</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">default_callback</span><span class="p">(</span><span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">default_callback</span><span class="p">(</span><span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Default Error Callback when get Raid Limited&quot;&quot;&quot;</span>
     <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">429</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Too Many Requests&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 </code></pre></div>

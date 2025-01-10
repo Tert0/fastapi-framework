@@ -1319,13 +1319,13 @@
 <h1 id="session-data">Session Data</h1>
 <h2 id="get-data">Get Data</h2>
 <p>You can get the Session Data with the <code>Session.get_data</code> dependency.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
-<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">Session</span>
-<span class="kn">from</span> <span class="nn">fastapi_framework.session</span> <span class="kn">import</span> <span class="n">fetch_session_id</span><span class="p">,</span> <span class="n">generate_session_id</span><span class="p">,</span> <span class="n">session_middleware</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_session_id</span><span class="p">,</span> <span class="n">generate_session_id</span><span class="p">,</span> <span class="n">session_middleware</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 
-<span class="k">class</span> <span class="nc">SessionData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SessionData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
 
@@ -1345,19 +1345,19 @@
 <span class="p">)</span>
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">route</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">route</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
     <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre></div></p>
 <h2 id="update-data">Update Data</h2>
 <p>You can update the Session Data with <code>Session.update_session</code>.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
-<span class="kn">from</span> <span class="nn">fastapi.requests</span> <span class="kn">import</span> <span class="n">Request</span>
-<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="n">Session</span>
-<span class="kn">from</span> <span class="nn">fastapi_framework.session</span> <span class="kn">import</span> <span class="n">fetch_session_id</span><span class="p">,</span> <span class="n">generate_session_id</span><span class="p">,</span> <span class="n">session_middleware</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.requests</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_session_id</span><span class="p">,</span> <span class="n">generate_session_id</span><span class="p">,</span> <span class="n">session_middleware</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 
-<span class="k">class</span> <span class="nc">SessionData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SessionData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
 
@@ -1377,7 +1377,7 @@
 <span class="p">)</span>
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{value}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">route</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">route</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">SessionData</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">get_data</span><span class="p">)):</span>
     <span class="n">data</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">update_session</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="s2">&quot;Done&quot;</span>

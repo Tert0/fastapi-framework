@@ -1320,10 +1320,10 @@
 
 <h1 id="example">Example</h1>
 <h2 id="example-with-jwt">Example with JWT</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
 
 
-<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">redis_dependency</span><span class="p">,</span>
     <span class="n">RateLimiter</span><span class="p">,</span>
     <span class="n">RateLimitManager</span><span class="p">,</span>
@@ -1337,25 +1337,25 @@
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="s2">&quot;startup&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">on_startup</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">on_startup</span><span class="p">():</span>
     <span class="k">await</span> <span class="n">redis_dependency</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">RateLimitManager</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="k">await</span> <span class="n">redis_dependency</span><span class="p">(),</span> <span class="n">get_uuid</span><span class="o">=</span><span class="n">get_uuid_user_id</span><span class="p">)</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">login_route</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">login_route</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="k">return</span> <span class="k">await</span> <span class="n">create_access_token</span><span class="p">({</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">})</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/limited&quot;</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Depends</span><span class="p">(</span><span class="n">RateLimiter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">RateLimitTime</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">))),</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_data</span><span class="p">)])</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">limited_route</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">limited_route</span><span class="p">():</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Got it&quot;</span>
 </code></pre></div>
 <h2 id="example-without-jwt">Example without JWT</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Depends</span>
 
 
-<span class="kn">from</span> <span class="nn">fastapi_framework</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi_framework</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">redis_dependency</span><span class="p">,</span>
     <span class="n">RateLimiter</span><span class="p">,</span>
     <span class="n">RateLimitManager</span><span class="p">,</span>
@@ -1366,13 +1366,13 @@
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="s2">&quot;startup&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">on_startup</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">on_startup</span><span class="p">():</span>
     <span class="k">await</span> <span class="n">redis_dependency</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">RateLimitManager</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="k">await</span> <span class="n">redis_dependency</span><span class="p">())</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/limited&quot;</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Depends</span><span class="p">(</span><span class="n">RateLimiter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">RateLimitTime</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)))])</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">limited_route</span><span class="p">():</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">limited_route</span><span class="p">():</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Got it&quot;</span>
 </code></pre></div>
 
