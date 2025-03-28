@@ -18,7 +18,7 @@ dependencies = [
     "passlib==1.7.4",
     "PyJWT==2.10.1",
     "python-dotenv==1.1.0",
-    "SQLAlchemy==2.0.39",
+    "SQLAlchemy==2.0.40",
     "pyyaml==6.0.2",
     "toml==0.10.2",
     "pydantic==2.10.6",
