@@ -21,7 +21,7 @@ dependencies = [
     "SQLAlchemy==2.0.44",
     "pyyaml==6.0.3",
     "toml==0.10.2",
-    "pydantic==2.12.2",
+    "pydantic==2.12.3",
     "greenlet==3.2.4"
 ]
 
