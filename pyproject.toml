@@ -22,7 +22,7 @@ dependencies = [
     "pyyaml==6.0.3",
     "toml==0.10.2",
     "pydantic==2.12.5",
-    "greenlet==3.2.4"
+    "greenlet==3.3.0"
 ]
 
 [project.urls]
