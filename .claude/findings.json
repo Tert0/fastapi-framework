@@ -1,0 +1,95 @@
+{
+  "target": "Tert0/fastapi-framework",
+  "version": "1.5.3.5",
+  "language": "Python",
+  "framework": "FastAPI",
+  "audit_date": "2026-05-16",
+  "files_audited": 12,
+  "findings": [
+    {
+      "vuln_id": "FSF-2025-001",
+      "severity": "CRITICAL",
+      "confidence": 0.92,
+      "cwe": "CWE-502",
+      "title": "YAML Unsafe Deserialization via yaml.CLoader Leading to Arbitrary Code Execution",
+      "file": "fastapi_framework/config.py",
+      "line": 80,
+      "data_flow": {
+        "source": "config.py:72 — open(config_file_path) reads YAML file content",
+        "sink": "config.py:80 — yaml.load(data, Loader=yaml.CLoader) deserializes with unsafe CLoader",
+        "filter": "NONE — CLoader is the C-based equivalent of yaml.Loader, which supports arbitrary Python object construction via !!python/object tags",
+        "path": "config_file_path → open() → data → yaml.load(CLoader) → arbitrary Python objects"
+      },
+      "description": "The config module uses yaml.CLoader to parse YAML configuration files. yaml.CLoader is the C implementation of yaml.Loader, NOT yaml.SafeLoader. It supports the full YAML tag set including !!python/object which allows instantiation of arbitrary Python classes. Any attacker who can modify the YAML config file can achieve remote code execution by crafting a YAML payload with malicious Python object tags.",
+      "poc": "# Malicious config.yaml demonstrating RCE via !!python/object\n# If placed at the CONFIG_PATH location (default: config.yaml):\nPAYLOAD: !!python/object/apply:subprocess.check_output [['whoami']]",
+      "fix": {
+        "file": "fastapi_framework/config.py",
+        "line": 80,
+        "old": "config = yaml.load(data, Loader=yaml.CLoader)",
+        "new": "config = yaml.load(data, Loader=yaml.CSafeLoader)"
+      },
+      "cvss": {
+        "score": 7.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "breakdown": {
+          "AV": "Local — attacker needs filesystem write access to config file",
+          "AC": "Low — crafting malicious YAML is trivial",
+          "PR": "None — no privileges needed beyond file write",
+          "UI": "Required — admin/user must load the malicious config",
+          "S": "Unchanged",
+          "C": "High — full code execution",
+          "I": "High — can modify any data",
+          "A": "High — can disrupt service"
+        }
+      },
+      "dependencies": {
+        "package": "pyyaml",
+        "version": "6.0.3",
+        "vulnerable": "all versions using CLoader"
+      },
+      "status": "fixed_locally"
+    },
+    {
+      "vuln_id": "FSF-2025-002",
+      "severity": "MEDIUM",
+      "confidence": 0.95,
+      "cwe": "CWE-532",
+      "title": "Sensitive SQL Query Information Leakage via Hardcoded echo=True in Production",
+      "file": "fastapi_framework/database.py",
+      "line": 59,
+      "data_flow": {
+        "source": "database.py:59 — echo=True hardcoded in create_async_engine()",
+        "sink": "SQLAlchemy engine logs all SQL queries (including INSERT/UPDATE with sensitive data) to stdout via logging.StreamHandler",
+        "filter": "NONE — echo=True is a hardcoded boolean literal, cannot be disabled via configuration",
+        "path": "DB.__init__() → create_async_engine(echo=True) → SQLAlchemy logging → stdout"
+      },
+      "description": "The DB class hardcodes echo=True when creating the async SQLAlchemy engine. This causes ALL SQL queries — including INSERT statements containing passwords, personal data, and other sensitive information — to be logged at INFO level to stdout via SQLAlchemy's logging system. There is no way to disable this behavior without modifying the framework source code. In production deployments, this exposes sensitive data to anyone with log access.",
+      "poc": "# Any INSERT operation through the framework:\n# await db.add(User(username='admin', password_hash='$2b$12$...'))\n# This produces log output:\n# 2025-01-01 00:00:00,000 INFO sqlalchemy.engine.Engine INSERT INTO users (username, password_hash) VALUES ('admin', '$2b$12$...')",
+      "fix": {
+        "file": "fastapi_framework/database.py",
+        "line": 59,
+        "old": "self._engine = create_async_engine(url, echo=True, pool_pre_ping=True, pool_recycle=300, **options)",
+        "new": "echo = getenv(\"DB_ECHO\", \"false\").lower() == \"true\"\n        self._engine = create_async_engine(url, echo=echo, pool_pre_ping=True, pool_recycle=300, **options)"
+      },
+      "cvss": {
+        "score": 4.3,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "breakdown": {
+          "AV": "Local — logs are typically local files/stdout",
+          "AC": "Low — no special conditions needed, logging is automatic",
+          "PR": "Low — any user who can trigger DB operations",
+          "UI": "None",
+          "S": "Unchanged",
+          "C": "Low — SQL queries leaked, may contain sensitive data",
+          "I": "None",
+          "A": "None"
+        }
+      },
+      "dependencies": {
+        "package": "sqlalchemy",
+        "version": "2.0.49"
+      },
+      "status": "fixed_locally"
+    }
+  ]
+}

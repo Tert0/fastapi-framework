@@ -56,7 +56,8 @@ class DB:
         if options is None:
             options = {"pool_size": 20, "max_overflow": 20}
         url = URL.create(drivername=driver, **kwargs)
-        self._engine = create_async_engine(url, echo=True, pool_pre_ping=True, pool_recycle=300, **options)
+        echo = getenv("DB_ECHO", "false").lower() == "true"
+        self._engine = create_async_engine(url, echo=echo, pool_pre_ping=True, pool_recycle=300, **options)
         self._session = async_sessionmaker(self._engine, expire_on_commit=False)()
 
     async def create_tables(self):
