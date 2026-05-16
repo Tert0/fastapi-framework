@@ -77,7 +77,7 @@ class ConfigMeta(type):
         if config_type.lower() == "yaml":
             import yaml
 
-            config = yaml.load(data, Loader=yaml.CLoader)
+            config = yaml.safe_load(data)
         elif config_type.lower() == "json":
             import json
 
