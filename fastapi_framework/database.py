@@ -56,7 +56,7 @@ class DB:
         if options is None:
             options = {"pool_size": 20, "max_overflow": 20}
         url = URL.create(drivername=driver, **kwargs)
-        self._engine = create_async_engine(url, echo=True, pool_pre_ping=True, pool_recycle=300, **options)
+        self._engine = create_async_engine(url, pool_pre_ping=True, pool_recycle=300, **options)
         self._session = async_sessionmaker(self._engine, expire_on_commit=False)()
 
     async def create_tables(self):
@@ -112,7 +112,8 @@ DB_USERNAME = getenv("DB_USERNAME", "postgres")
 DB_PASSWORD = getenv("DB_PASSWORD", "")
 DB_POOL_SIZE = getenv("DB_POOL_SIZE", "20")
 DB_MAX_OVERFLOW = getenv("DB_MAX_OVERFLOW", "20")
-DB_POOL = True if getenv("DB_POOL", "True").lower() == "true" else False
+DB_POOL = getenv("DB_POOL", "True").lower() == "true"
+DB_ECHO = getenv("DB_ECHO", "False").lower() == "true"
 
 
 class DatabaseDependency:
@@ -134,6 +135,7 @@ class DatabaseDependency:
             "pool_size": DB_POOL_SIZE,
             "max_overflow": DB_MAX_OVERFLOW,
             "poolclass": DB_POOL,
+            "echo": DB_ECHO,
         }
         self.engine_options = dict([(k, int(v)) for k, v in self.engine_options.items() if v != ""])
         if self.engine_options["poolclass"] == 0:
