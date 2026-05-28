@@ -5,6 +5,9 @@
 [![PyPI version](https://badge.fury.io/py/fastapi-framework.svg)](https://badge.fury.io/py/fastapi-framework)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/fastapi-framework.svg)](https://pypi.org/project/fastapi-framework)
 
+> [!WARNING]
+> This project has not been actively maintained for quite a while. Please consider forking or using an alternative.
+
 
 A FastAPI Framework for things like `Database`,
 `Redis`, `Logging`, `JWT Authentication`, `Rate Limits` and `Sessions` 
